@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hexin.user.dao.user.PigWeightDao">
+    <resultMap id="pigWeight" type="com.hexin.user.model.PigWeight">
+            <id property="id" column="id"/>
+            <result property="pigBatchNo" column="pig_batch_no"/>
+            <result property="pigNum" column="pig_num"/>
+            <result property="pigWidth" column="pig_width"/>
+            <result property="pigWeight" column="pig_weight"/>
+            <result property="pigLevel" column="pig_level"/>
+            <result property="pigColor" column="pig_color"/>
+            <result property="chargeMan" column="charge_man"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`pig_batch_no` ,`pig_num` ,`pig_width` ,`pig_weight` ,`pig_level` ,`pig_color` ,`charge_man` ,`create_time` ,`update_time`
+    </sql>
+
+    <insert id="insert">
+        insert into `pig_weight`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="pigBatchNo != null">
+                `pig_batch_no`,
+            </if>
+            <if test="pigNum != null">
+                `pig_num`,
+            </if>
+            <if test="pigWidth != null">
+                `pig_width`,
+            </if>
+            <if test="pigWeight != null">
+                `pig_weight`,
+            </if>
+            <if test="pigLevel != null">
+                `pig_level`,
+            </if>
+            <if test="pigColor != null">
+                `pig_color`,
+            </if>
+            <if test="chargeMan != null">
+                `charge_man`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="updateTime != null">
+                `update_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+            #{id} ,
+            </if>
+            <if test="pigBatchNo != null">
+            #{pigBatchNo} ,
+            </if>
+            <if test="pigNum != null">
+            #{pigNum} ,
+            </if>
+            <if test="pigWidth != null">
+            #{pigWidth} ,
+            </if>
+            <if test="pigWeight != null">
+            #{pigWeight} ,
+            </if>
+            <if test="pigLevel != null">
+            #{pigLevel} ,
+            </if>
+            <if test="pigColor != null">
+            #{pigColor} ,
+            </if>
+            <if test="chargeMan != null">
+            #{chargeMan} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+            <if test="updateTime != null">
+            #{updateTime} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `pig_weight`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="pigBatchNo != null">
+                and `pig_batch_no` = #{pigBatchNo}
+            </if>
+            <if test="pigNum != null">
+                and `pig_num` = #{pigNum}
+            </if>
+            <if test="pigWidth != null">
+                and `pig_width` = #{pigWidth}
+            </if>
+            <if test="pigWeight != null">
+                and `pig_weight` = #{pigWeight}
+            </if>
+            <if test="pigLevel != null">
+                and `pig_level` = #{pigLevel}
+            </if>
+            <if test="pigColor != null">
+                and `pig_color` = #{pigColor}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and `update_time` = #{updateTime}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deletes">
+        delete from `pig_weight`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `pig_weight`
+        <set>
+                <if test="pigBatchNo != null">
+                    `pig_batch_no` = #{pigBatchNo},
+                </if>
+                <if test="pigNum != null">
+                    `pig_num` = #{pigNum},
+                </if>
+                <if test="pigWidth != null">
+                    `pig_width` = #{pigWidth},
+                </if>
+                <if test="pigWeight != null">
+                    `pig_weight` = #{pigWeight},
+                </if>
+                <if test="pigLevel != null">
+                    `pig_level` = #{pigLevel},
+                </if>
+                <if test="pigColor != null">
+                    `pig_color` = #{pigColor},
+                </if>
+                <if test="chargeMan != null">
+                    `charge_man` = #{chargeMan},
+                </if>
+                <if test="createTime != null">
+                    `create_time` = #{createTime},
+                </if>
+                <if test="updateTime != null">
+                    `update_time` = #{updateTime},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="select" resultMap="pigWeight">
+        select
+        <include refid="columns" />
+        from `pig_weight`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="pigBatchNo != null">
+                and `pig_batch_no` = #{pigBatchNo}
+            </if>
+            <if test="pigNum != null">
+                and `pig_num` = #{pigNum}
+            </if>
+            <if test="pigWidth != null">
+                and `pig_width` = #{pigWidth}
+            </if>
+            <if test="pigWeight != null">
+                and `pig_weight` = #{pigWeight}
+            </if>
+            <if test="pigLevel != null">
+                and `pig_level` = #{pigLevel}
+            </if>
+            <if test="pigColor != null">
+                and `pig_color` = #{pigColor}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and `update_time` = #{updateTime}
+            </if>
+        </trim>
+    </select>
+    <select id="selectByPage" resultMap="pigWeight" parameterType="com.hexin.user.vo.PigWeightVO">
+        select
+        <include refid="columns" />
+        from `pig_weight`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="pigBatchNo != null and pigBatchNo !=''">
+                and `pig_batch_no` = #{pigBatchNo}
+            </if>
+            <if test="pigNum != null">
+                and `pig_num` = #{pigNum}
+            </if>
+            <if test="pigWidth != null">
+                and `pig_width` = #{pigWidth}
+            </if>
+            <if test="pigWeight != null">
+                and `pig_weight` = #{pigWeight}
+            </if>
+            <if test="pigLevel != null and pigLevel != ''">
+                and `pig_level` = #{pigLevel}
+            </if>
+            <if test="pigColor != null">
+                and `pig_color` = #{pigColor}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and `update_time` = #{updateTime}
+            </if>
+        </trim>
+        order by update_time desc
+        <if test="start !=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="countSelectByPage" resultType="int" parameterType="com.hexin.user.vo.PigWeightVO">
+        select
+        count(1)
+        from `pig_weight`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="pigBatchNo != null and pigBatchNo !=''">
+                and `pig_batch_no` = #{pigBatchNo}
+            </if>
+            <if test="pigNum != null">
+                and `pig_num` = #{pigNum}
+            </if>
+            <if test="pigWidth != null">
+                and `pig_width` = #{pigWidth}
+            </if>
+            <if test="pigWeight != null">
+                and `pig_weight` = #{pigWeight}
+            </if>
+            <if test="pigLevel != null and pigLevel !='' ">
+                and `pig_level` = #{pigLevel}
+            </if>
+            <if test="pigColor != null">
+                and `pig_color` = #{pigColor}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and `update_time` = #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by ZTCGenerator<zingon@aliyun.com> on 2017-10-25.
+-->
+<mapper namespace="com.hexin.user.dao.user.PigPoundDao">
+    <resultMap id="pigPound" type="com.hexin.user.model.PigPound">
+        <id property="id" column="id"/>
+        <result property="botpounds" column="botpounds"/>
+        <result property="chargeMan" column="charge_man"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`botpounds` ,`create_time`,charge_man
+    </sql>
+
+    <insert id="insert">
+        insert into `pig_pound`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="botpounds != null">
+                `botpounds`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="chargeMan != null">
+                `charge_man`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+            #{id} ,
+            </if>
+            <if test="botpounds != null">
+            #{botpounds} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+            <if test="chargeMan != null">
+                #{chargeMan} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `pig_pound`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="botpounds != null">
+                and `botpounds` = #{botpounds}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deletes">
+        delete from `pig_pound`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `pig_pound`
+        <set>
+                <if test="botpounds != null">
+                    `botpounds` = #{botpounds},
+                </if>
+                <if test="createTime != null">
+                    `create_time` = #{createTime},
+                </if>
+                <if test="chargeMan != null">
+                    `charge_man` = #{chargeMan}
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="select" resultMap="pigPound">
+        select
+        <include refid="columns" />
+        from `pig_pound`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="botpounds != null">
+                and `botpounds` = #{botpounds}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectByPage" resultMap="pigPound" parameterType="com.hexin.user.vo.PigPoundsVO">
+        select
+        <include refid="columns" />
+        from `pig_pound`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="botpounds != null">
+                and `botpounds` = #{botpounds}
+            </if>
+            <if test="startTime != null">
+                and `create_time` &gt;= #{startTime,jdbcType=DATE}
+            </if>
+            <if test="endTime != null">
+                and `create_time` &lt;= #{endTime,jdbcType=DATE}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+        </trim>
+          order by create_time desc
+        <if test="start !=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+    <select id="countSelectByPage" resultType="int" parameterType="com.hexin.user.vo.PigPoundsVO">
+        select
+        count(1)
+        from `pig_pound`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="botpounds != null">
+                and `botpounds` = #{botpounds}
+            </if>
+            <if test="startTime != null">
+                and `create_time` &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                and `create_time` &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="chargeMan != null">
+                and `charge_man` = #{chargeMan}
+            </if>
+        </trim>
+    </select>
+</mapper>

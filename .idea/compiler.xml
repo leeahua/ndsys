@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="usercenter-common" />
+        <module name="usercenter-service" />
+        <module name="usercenter-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="systemmanager" target="1.7" />
+      <module name="usercenter" target="1.7" />
+      <module name="usercenter-api" target="1.7" />
+      <module name="usercenter-common" target="1.7" />
+      <module name="usercenter-service" target="1.7" />
+      <module name="usercenter-web" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
