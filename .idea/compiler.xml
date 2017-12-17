@@ -12,6 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demosocket" target="1.5" />
       <module name="systemmanager" target="1.7" />
       <module name="usercenter" target="1.7" />
       <module name="usercenter-api" target="1.7" />

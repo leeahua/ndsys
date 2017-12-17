@@ -19,6 +19,23 @@
 			});
 		}
 	}
+    function ajaxsubmit(url,data){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            dataType: "json",
+            contentType:"application/x-www-form-urlencoded",
+            success: function(result){
+                alert("启动串口监听服务器完成");
+                $("#startbtn").hide();
+            },
+            error:function(result){
+
+                alert("连接服务器异常");
+            }
+        });
+    }
 	$(function(){
 		openTab('猪肉信息','index/topiginfo');
 	});
@@ -27,9 +44,11 @@
 <body class="easyui-layout">
 <div region="north" style="height: 80px;background-color: #E0ECFF">
 	<h1>猪肉嘌呤管理系统</h1>
+
 </div>
 <div region="center">
 	<div class="easyui-tabs" fit="true" border="false" id="tabs">
+		<button id="startbtn" onclick="ajaxsubmit('/serial/start','')">启动端口服务</button>
 	</div>
 </div>
 <div region="west" style="width: 180px; padding: 10px" title="导航菜单" split="true">

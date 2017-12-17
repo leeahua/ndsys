@@ -79,7 +79,7 @@ public class SerialCOM22Listener implements SerialPortEventListener {
                     System.out.println(sb.toString());
                     PigWeight pigWeightS = new PigWeight();
                     pigWeightS.setPigBatchNo(sb.toString().split("@")[0]);
-                    pigWeightS.setPigNum(1);
+                    //pigWeightS.setPigNum(1);
                     List<PigWeight> dbPigWeightList = pigWeightService.select(pigWeightS);
                     if(dbPigWeightList.size()==0){
                         log.info("add----batchno:{}------->",new BigDecimal(sb.toString().split("@")[0]));
@@ -90,7 +90,7 @@ public class SerialCOM22Listener implements SerialPortEventListener {
                         pigWeight.setPigWeight(new BigDecimal(sb.toString().split("@")[1]).setScale(2,BigDecimal.ROUND_HALF_DOWN));
                         pigWeight.setPigBatchNo(sb.toString().split("@")[0]);
                         pigWeight.setPigColor("Z");
-                        pigWeight.setPigNum(1);
+                        //pigWeight.setPigNum(1);
                         pigWeight.setPigLevel("A");
                         pigWeight.setPigWidth(new BigDecimal("12"));
                         pigWeightService.insert(pigWeight);

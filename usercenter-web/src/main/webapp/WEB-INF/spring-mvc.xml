@@ -46,6 +46,7 @@
 
 	<!-- 自动扫描且只扫描@Controller -->
 	<context:component-scan base-package="com.hexin.user.controller" />
+	<!--<context:component-scan base-package="com.hexin.user.serialfull" />-->
 
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />

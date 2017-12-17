@@ -21,6 +21,7 @@ public class PigWidthService {
     public int insert(PigWidth pigWidth){
         pigWidth.setCreateTime(new Date());
         pigWidth.setUpdateTime(new Date());
+        pigWidth.setChargeMan("admin");
         return pigWidthDao.insert(pigWidth);
     }
 

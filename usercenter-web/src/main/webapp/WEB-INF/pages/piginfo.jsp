@@ -20,7 +20,7 @@
             <th field="pigBatchNo" width="30">批次号</th>
             <th field="pigWidth" width="10">宽度</th>
             <th field="pigWeight" width="20">重量</th>
-            <th field="pigColor" width="20">颜色</th>
+            <th field="pigColor" width="20">扣款标识</th>
             <th field="pigLevel" width="20" >级别</th>
            <%-- <th field="chargeMan" width="50">负责人</th>--%>
             <th field="createTime" width="35" formatter="formatDateTime">创建时间</th>

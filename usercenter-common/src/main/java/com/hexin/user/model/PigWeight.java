@@ -13,7 +13,7 @@ public class PigWeight implements Serializable{
         // 批次号
         private String pigBatchNo;
         // 序号
-        private Integer pigNum;
+        private String pigNum;
         // 猪肉等级
         private String pigLevel;
         //宽度
@@ -45,11 +45,11 @@ public class PigWeight implements Serializable{
         public void setPigBatchNo(String pigBatchNo) {
             this.pigBatchNo = pigBatchNo;
         }
-        public Integer getPigNum() {
+        public String getPigNum() {
             return pigNum;
         }
 
-        public void setPigNum(Integer pigNum) {
+        public void setPigNum(String pigNum) {
             this.pigNum = pigNum;
         }
         public String getPigColor() {

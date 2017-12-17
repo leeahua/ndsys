@@ -19,7 +19,7 @@
             `id` ,`pig_batch_no` ,`pig_num` ,`pig_width` ,`pig_weight` ,`pig_level` ,`pig_color` ,`charge_man` ,`create_time` ,`update_time`
     </sql>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into `pig_width`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -281,6 +281,7 @@
             </if>
         </trim>
     </select>
+
 
 
 

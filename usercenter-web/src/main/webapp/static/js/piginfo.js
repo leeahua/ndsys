@@ -1,14 +1,13 @@
 /**
  * 系统平台用户控制js
- *
  */
 $(document).ready(function () {
     //加载table数据
     $("#dg").datagrid("hideColumn", "id");
     loadData();
     setInterval(loadData,2000);
-
 });
+
 function loadData(){
     $('#dg').datagrid({
         url: "/piginfo/getforpage",
