@@ -227,7 +227,7 @@ public class SerialComLaser3Observable implements Observer {
             }else{
                 PigWidth pigWidthdb =  pigWidthDbs.get(0);
                 pigWidthServicelocal.delete(pigWidthdb);
-                --initIndex;
+                initIndex=initIndex-2;
                 LOGGER.error("删除前置编号{}的宽度数据完成",preIndex);
             }
         }else{
