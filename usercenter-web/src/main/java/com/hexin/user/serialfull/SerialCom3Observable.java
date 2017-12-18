@@ -36,7 +36,9 @@ public class SerialCom3Observable implements Observer {
         serialComLaser3Observable  = new SerialComLaser3Observable(pigWidthService);
     }
 
-
+    public void close(){
+        sr.close();
+    }
     /**
      * 往串口发送字符串数据,实现双向通讯.
      * @param  message
@@ -129,7 +131,7 @@ public class SerialCom3Observable implements Observer {
     @Override
     public void update(Observable o, Object message) {
         //TODO 处理激光1指令数据
-        LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
+        //LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
         byte[] result = (byte[])message;
         String hexstr = ByteUtil.BinaryToHexString((byte[])message).replace(" ","");
         if("03".equals(hexstr)){//接到手机数据的指令，则取发送指令取获取数据
@@ -141,11 +143,10 @@ public class SerialCom3Observable implements Observer {
             hexdata[4]=(byte)(0x03);
             hexdata[5]=(byte)(0xF2);
             serialComLaser3Observable.send(hexdata);
-        }else if("09".equals(hexstr)){//Rank
-            //给种类赋值
-
-        }else if("05".equals(hexstr)){////暂停
-
+        }else if("09".equals(hexstr)){//降级
+            serialComLaser3Observable.changeRankData();
+        }else if("05".equals(hexstr)){//删除
+            serialComLaser3Observable.deletePreData();
         }else if("07".equals(hexstr)){//扣款
             serialComLaser3Observable.refreshData();
         }

@@ -19,25 +19,9 @@
 			});
 		}
 	}
-    function ajaxsubmit(url,data){
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            dataType: "json",
-            contentType:"application/x-www-form-urlencoded",
-            success: function(result){
-                alert("启动串口监听服务器完成");
-                $("#startbtn").hide();
-            },
-            error:function(result){
 
-                alert("连接服务器异常");
-            }
-        });
-    }
 	$(function(){
-		openTab('猪肉信息','index/topiginfo');
+		openTab('服务器信息管理','index/towelcome');
 	});
 </script>
 </head>
@@ -48,7 +32,6 @@
 </div>
 <div region="center">
 	<div class="easyui-tabs" fit="true" border="false" id="tabs">
-		<button id="startbtn" onclick="ajaxsubmit('/serial/start','')">启动端口服务</button>
 	</div>
 </div>
 <div region="west" style="width: 180px; padding: 10px" title="导航菜单" split="true">
@@ -58,6 +41,7 @@
 	<a href="javascript:openTab('猪肉宽度信息管理','index/topigwidth')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-large-shapes'">猪肉宽度信息管理</a>
 	<a href="javascript:openTab('底磅信息管理','index/topigpounds')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-large-shapes'">底磅信息管理</a>
 	<a href="javascript:openTab('用户信息管理','index/touser')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-large-shapes'">用户信息管理</a>
+	<a href="javascript:openTab('服务器信息管理','index/towelcome')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-large-shapes'">服务器信息管理</a>
 	<a href="/login/dologinout" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-large-shapes'">退出登录</a>
 </div>
 <div region="south" style="height: 25px;padding: 5px" align="center">

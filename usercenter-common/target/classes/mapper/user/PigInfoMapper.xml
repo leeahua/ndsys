@@ -31,7 +31,7 @@
                 and `pw.pig_batch_no` = #{pigBatchNo}
             </if>
         </trim>
-        order by update_time desc
+        order by pw.update_time desc
         <if test="start !=null and pageSize!=null">
             limit #{start},#{pageSize}
         </if>
@@ -52,11 +52,11 @@
         select pigBatchNo,
         pigNum,
         SUM(pig_weight) as totalWeight,
-        SUM(if(pig_level='A',1,0)) as aTotal,
-        SUM(if(pig_level='B',1,0)) as bTotal,
-        SUM(if(pig_level='C',1,0)) as cTotal,
-        SUM(if(pig_level='D',1,0)) as dTotal,
-        SUM(if(pig_level='E',1,0)) as eTotal,
+        SUM(if(pig_level='1',1,0)) as aTotal,
+        SUM(if(pig_level='2',1,0)) as bTotal,
+        SUM(if(pig_level='3',1,0)) as cTotal,
+        SUM(if(pig_level='4',1,0)) as dTotal,
+        SUM(if(pig_level='5',1,0)) as eTotal,
         createTime
         from (
         select pw.pig_batch_no as pigBatchNo,pw.pig_num as pigNum
@@ -73,7 +73,7 @@
         <if test="date == null or date ==''">
             createTime = DATE(now())
         </if>
-        group  by pigBatchNo
+        group  by pigBatchNo desc
 
     </select>
 

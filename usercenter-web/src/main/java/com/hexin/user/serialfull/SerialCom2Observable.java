@@ -2,7 +2,6 @@ package com.hexin.user.serialfull;
 
 
 
-import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWeight;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.utils.ByteUtil;
@@ -38,7 +37,9 @@ public class SerialCom2Observable implements Observer {
     public SerialCom2Observable() {
 
     }
-
+    public void close(){
+        sr.close();
+    }
     public static SerialCom2Observable getInstance(PigWeightService serialService){
         return new SerialCom2Observable(serialService);
     }

@@ -538,7 +538,7 @@
       </resource>
     </resources>
 
-    <finalName>usercenter</finalName>
+    <finalName>ROOT</finalName>
   </build>
 
   <!--<repositories>

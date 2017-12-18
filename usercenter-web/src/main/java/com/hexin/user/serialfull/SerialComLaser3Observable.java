@@ -27,7 +27,7 @@ public class SerialComLaser3Observable implements Observer {
     private static PigWidthService pigWidthServicelocal;
     private static int initIndex = 2;
     private static int preIndex = -1;
-    private  SerialCom3 sr = new SerialCom3();
+    private  SerialComLaser3 sr = new SerialComLaser3();
 
     public SerialComLaser3Observable(){
 
@@ -37,6 +37,9 @@ public class SerialComLaser3Observable implements Observer {
         this.pigWidthServicelocal = pigWidthService;
     }
 
+    public void close(){
+        sr.close();
+    }
 
     /**
      * 往串口发送字符串数据,实现双向通讯.
@@ -165,23 +168,72 @@ public class SerialComLaser3Observable implements Observer {
         preIndex = pigWidth.getId();
     }
 
+    /**
+     * 设置扣款逻辑
+     * */
     public void refreshData(){
         if(preIndex != -1){
+            LOGGER.info("开始扣款前置编号{}的宽度数据！",preIndex);
             PigWidth pigWidth = new PigWidth();
             pigWidth.setId(preIndex);
             List<PigWidth> pigWidthDbs = pigWidthServicelocal.select(pigWidth);
             if(pigWidthDbs.size()==0){
-                LOGGER.error("需要更新的数据不存在:{}",preIndex);
+                LOGGER.error("扣款前置编号{}的宽度数据不存在！",preIndex);
             }else{
                 PigWidth pigWidthdb =  pigWidthDbs.get(0);
                 pigWidthdb.setPigColor("是");
                 pigWidthServicelocal.update(pigWidthdb);
-                LOGGER.error("更新数据完成：{}",preIndex);
+                LOGGER.error("扣款前置编号{}的宽度数据完成",preIndex);
             }
+        }else{
+            LOGGER.info("扣款前置编号{}不存在!",preIndex);
+        }
+    }
+    /**
+     * 设置降级
+     * */
+    public void changeRankData(){
+        if(preIndex != -1){
+            LOGGER.info("开始降级前置编号{}的宽度数据！",preIndex);
+            PigWidth pigWidth = new PigWidth();
+            pigWidth.setId(preIndex);
+            List<PigWidth> pigWidthDbs = pigWidthServicelocal.select(pigWidth);
+            if(pigWidthDbs.size()==0){
+                LOGGER.error("开始降级前置编号{}的宽度数据不存在:{}",preIndex);
+            }else{
+                PigWidth pigWidthdb =  pigWidthDbs.get(0);
+                if(Integer.valueOf(pigWidthdb.getPigLevel())<5) {
+                    pigWidthdb.setPigLevel((Integer.valueOf(pigWidthdb.getPigLevel()) + 1) + "");
+                    pigWidthServicelocal.update(pigWidthdb);
+                }
+                LOGGER.error("降级前置编号{}的宽度数据完成",preIndex);
+            }
+        }else{
+            LOGGER.info("降级前置编号{}不存在!",preIndex);
         }
     }
 
-
+    /**
+     * 删除
+     * */
+    public void deletePreData(){
+        if(preIndex != -1){
+            LOGGER.info("开始删除前置编号{}的宽度数据！",preIndex);
+            PigWidth pigWidth = new PigWidth();
+            pigWidth.setId(preIndex);
+            List<PigWidth> pigWidthDbs = pigWidthServicelocal.select(pigWidth);
+            if(pigWidthDbs.size()==0){
+                LOGGER.error("需要删除前置编号{}的信息不存在:{}",preIndex);
+            }else{
+                PigWidth pigWidthdb =  pigWidthDbs.get(0);
+                pigWidthServicelocal.delete(pigWidthdb);
+                --initIndex;
+                LOGGER.error("删除前置编号{}的宽度数据完成",preIndex);
+            }
+        }else{
+            LOGGER.info("删除前置编号{}不存在!",preIndex);
+        }
+    }
 
 
 }

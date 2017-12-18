@@ -19,13 +19,13 @@ import java.util.Observer;
  */
 public class SerialCom5Observable implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SerialCom5Observable.class);
-    private static final String PORT = "COM5"; //端口名
+    private static final String PORT = "COM7"; //端口名
     private static final String RATE = "19200"; //波特率
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static PigWidthService pigWidthServicelocal;
     private static SerialComLaser5Observable serialComLaser5Observable ;
-    private  SerialCom2 sr = new SerialCom2();
+    private  SerialCom5 sr = new SerialCom5();
     private static int initIndex = 0;
 
     private SerialCom5Observable(){
@@ -37,7 +37,9 @@ public class SerialCom5Observable implements Observer {
         serialComLaser5Observable = new SerialComLaser5Observable(pigWidthService);
     }
 
-
+    public void close(){
+        sr.close();
+    }
     /**
      * 往串口发送字符串数据,实现双向通讯.
      * @param  message
@@ -130,7 +132,7 @@ public class SerialCom5Observable implements Observer {
     @Override
     public void update(Observable o, Object message) {
         //TODO 处理激光2指令数据
-        LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
+        //LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
         byte[] result = (byte[])message;
         String hexstr = ByteUtil.BinaryToHexString((byte[])message).replace(" ","");
         if("03".equals(hexstr)){//接到手机数据的指令，则取发送指令取获取数据
@@ -142,13 +144,14 @@ public class SerialCom5Observable implements Observer {
             hexdata[4]=(byte)(0x03);
             hexdata[5]=(byte)(0xF2);
             serialComLaser5Observable.send(hexdata);
-        }else if("09".equals(hexstr)){//Rank
-            //给种类赋值
-
         }else if("05".equals(hexstr)){////暂停
-
+            serialComLaser5Observable.deletePreData();
         }else if("07".equals(hexstr)){//扣款
             serialComLaser5Observable.refreshData();
+        }else if("09".equals(hexstr)){//种类降级
+            serialComLaser5Observable.changeRankData();
+        }else{
+            LOGGER.error("未知指令:{}，不予处理！",hexstr);
         }
 
     }
