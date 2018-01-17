@@ -2,6 +2,7 @@ package com.hexin.user.serialfull;
 
 
 
+import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWeight;
 import com.hexin.user.model.PigWidth;
 import com.hexin.user.service.user.PigWidthService;
@@ -159,8 +160,8 @@ public class SerialComLaser5Observable implements Observer {
         pigWidth.setPigLevel(rank+"");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         String batchNo = sdf.format(new Date());
-        pigWidth.setPigBatchNo(batchNo);
-        pigWidth.setPigNum(batchNo+String.format("%05d",initIndex));
+        pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
+        pigWidth.setPigNum(String.format("%05d",initIndex));
         initIndex = initIndex +2;
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble));

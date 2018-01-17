@@ -1,9 +1,12 @@
 package com.hexin.user.controller;
 
 import com.hexin.user.constants.Constans;
+import com.hexin.user.enums.ResultStatueEnum;
+import com.hexin.user.model.PigPound;
 import com.hexin.user.serialfull.SerialCom2Observable;
 import com.hexin.user.serialfull.SerialCom3Observable;
 import com.hexin.user.serialfull.SerialCom5Observable;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.service.user.PigWidthService;
 import com.hexin.user.utils.ResultUtil;
@@ -31,6 +34,9 @@ public class SerialController {
     @Autowired
     private PigWidthService pigWidthService;
 
+    @Autowired
+    private PigPoundService pigPoundService;
+
     private static SerialCom2Observable serialCom2Observable;
 
     private static SerialCom3Observable serialCom3Observable;
@@ -41,15 +47,31 @@ public class SerialController {
     @RequestMapping("/start")
     @ResponseBody
     public Object start( HttpServletRequest request){
+        PigPound pigPound = pigPoundService.selectOne();
+        if(pigPound==null){
+            return  ResultUtil.error(ResultStatueEnum.POUND_DATA_NOT_EXISTS);
+        }
+        if(pigPound.getBatchNum()==null){
+            return ResultUtil.error(ResultStatueEnum.BATCH_DATA_NOT_EXISTS);
+        }
+
+        Constans.poundData.put("pound",Double.toString(pigPound.getBotpounds()));
+        Constans.poundData.put("batchNum",pigPound.getBatchNum());
+
+
         if(request.getSession().getAttribute("isopen")==null) {
+            //监听单片机指令串口COM2发送的电子磅的数据.
             serialCom2Observable = new SerialCom2Observable(pigWeightService);
             serialCom2Observable.send("");
-            serialCom3Observable = new SerialCom3Observable(pigWidthService);
+            //监听单片机指令串口COM3发送过来的的指令  偶数.
+            serialCom3Observable = new SerialCom3Observable(pigWidthService,pigPoundService);
             serialCom3Observable.send("");
-            serialCom5Observable = new SerialCom5Observable(pigWidthService);
+            //监听单片机指令串口COM7发送过来的的指令  奇数.
+            serialCom5Observable = new SerialCom5Observable(pigWidthService,pigPoundService);
             serialCom5Observable.send("");
             request.getSession().setAttribute("isopen","1");
         }
+
         return ResultUtil.success();
     }
 

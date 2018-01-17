@@ -17,7 +17,7 @@
     <tr>
         <th field="id" width="10" type='hidden'>id</th>
         <th field="botpounds" width="10">底磅重</th>
-        <th field="chargeMan" width="30">创建人</th>
+        <th field="batchNum" width="30">批次号</th>
         <th field="createTime" width="35" formatter="formatDateTime">创建时间</th>
     </tr>
     </thead>
@@ -51,7 +51,8 @@
      closed="true" buttons="#dlg-buttons">
     <form id="fm" method="post" >
         <div style="margin-bottom:10px">
-            <input class="easyui-textbox" name="botpounds" style="width:100%" data-options="label:'底磅重:',required:true">
+            <input class="easyui-textbox" name="botpounds" style="width:100%" data-options="label:'底磅重(kg):',required:true">
+            <input class="easyui-textbox" name="batchNum" style="width:100%" data-options="label:'批次号:',required:true">
         </div>
     </form>
 </div>

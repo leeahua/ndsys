@@ -47,4 +47,7 @@ public class PigPoundService {
     public Integer countSelectByPage(PigPoundsVO pigPoundsVO){
         return pigPoundDao.countSelectByPage(pigPoundsVO);
     }
+    public PigPound selectOne(){
+        return pigPoundDao.selectOne();
+    }
 }

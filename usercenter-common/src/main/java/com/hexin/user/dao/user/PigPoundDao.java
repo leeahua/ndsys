@@ -16,6 +16,7 @@ public interface PigPoundDao extends BaseDao<PigPound> {
      * 分页查询
      * */
     List<PigPound> selectByPage(PigPoundsVO pigPoundsVO);
+    PigPound selectOne();
     /**
      * 分页查询个数
      * */

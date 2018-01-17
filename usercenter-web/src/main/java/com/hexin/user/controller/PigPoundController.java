@@ -84,7 +84,7 @@ public class PigPoundController {
             throw new UserException(ResultStatueEnum.PARAMETER_ERROR);
         }
         pigPound.setCreateTime(new Date());
-        pigPound.setChargeMan((String)request.getSession().getAttribute("user"));
+        pigPound.setBatchNum(pigPound.getBatchNum());
         return ResultUtil.loadResult(pigPound,"save",pigPoundService);
     }
 

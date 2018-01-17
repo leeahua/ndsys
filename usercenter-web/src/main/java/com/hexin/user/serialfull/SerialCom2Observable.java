@@ -2,6 +2,7 @@ package com.hexin.user.serialfull;
 
 
 
+import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWeight;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.utils.ByteUtil;
@@ -179,19 +180,16 @@ public class SerialCom2Observable implements Observer {
         for(byte[] message : dataList){
             String hexstr = ByteUtil.BinaryToHexString(message).replace(" ","").substring(8,32);
             String weight = ByteUtil.hexString2String(hexstr);
-            if(!"000000000000".equals(weight)){
+            Double wt = Double.valueOf(weight.substring(3,6))/10.0;
+            if(wt>15){
                 dataflag = true;
-                Double wt = Double.valueOf(weight.substring(3,6))/10.0;
-                if(wt>15){
-                    if(data.size()>0) {
-                        if (Math.abs(wt - data.peek()) >= 0 && Math.abs(wt - data.peek()) < 0.5) {
-                            data.push(wt);
-                        }
-                    }else{
+                if(data.size()>0) {
+                    if (Math.abs(wt - data.peek()) >= 0 && Math.abs(wt - data.peek()) < 0.5) {
                         data.push(wt);
                     }
+                }else{
+                    data.push(wt);
                 }
-
                 LOGGER.info("解析数值:{}",wt);
                 continue;
             }else{
@@ -201,30 +199,25 @@ public class SerialCom2Observable implements Observer {
                     data.toArray(doubles);
                     Arrays.sort(doubles);
                     double avg = 0.0;
-                    if(doubles.length>=3){//大于长度大于三个的时候则取中间三个的值的均值
-                        avg = (doubles[doubles.length/2-1]
-                                +doubles[doubles.length/2]
-                                +doubles[doubles.length/2+1])/3;
-                    }else{//小于3则直接去平均值
-                        double sum = 0.0;
-                        for(int m=0;m<doubles.length;m++){
-                            sum =sum + doubles[m];
-                        }
-                        avg = sum /doubles.length;
-
+                    double sum = 0.0;
+                    BigDecimal sum2 = new BigDecimal(0.0);
+                    BigDecimal avg2 = new BigDecimal(0.0);
+                    for(int m=0;m<doubles.length;m++){
+                        sum2 =sum2.add(new BigDecimal(Double.toString(doubles[m])));
                     }
+                    BigDecimal leng = new BigDecimal(Double.toString(doubles.length));
+                    avg2 = sum2.divide(leng,2,BigDecimal.ROUND_CEILING);
                     PigWeight pigWeight = new PigWeight();
                     pigWeight.setChargeMan("admin");
-                    pigWeight.setPigWeight(new BigDecimal(avg).setScale(2,BigDecimal.ROUND_CEILING));
+                    pigWeight.setPigWeight(avg2);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
                     String batchNo = sdf.format(new Date());
-                    pigWeight.setPigBatchNo(batchNo);
-                    pigWeight.setPigNum(batchNo+String.format("%05d",++initIndex));
+                    pigWeight.setPigBatchNo(Constans.poundData.get("batchNum")==null?"":Constans.poundData.get("batchNum"));
+                    pigWeight.setPigNum(String.format("%05d",++initIndex));
                     this.pigWeightService.insert(pigWeight);
                     data.removeAllElements();
                     dataflag = false;
                 }
-
 
             }
             LOGGER.info("解析数据位：{},对应十进制数为：{}",hexstr,weight);

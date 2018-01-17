@@ -25,16 +25,27 @@
                 dataType: "json",
                 contentType:"application/x-www-form-urlencoded",
                 success: function(result){
+                    console.log(result);
+                    if(result.code=='00') {
+                        if (data == 1) {
+                            alert("启动串口监听服务器完成");
+                            $("#startbtn").hide();
+                            $("#stopbtn").show();
+                        }
+                        if (data == 0) {
+                            alert("关闭串口监听服务器完成");
+                            $("#stopbtn").hide();
+                            $("#startbtn").show();
+                        }
+                    }else{
+                        if (data == 1) {
+                            alert(result.msg);
 
-                    if(data==1){
-                        alert("启动串口监听服务器完成");
-                        $("#startbtn").hide();
-                        $("#stopbtn").show();
-                    }
-                    if(data==0){
-                        alert("关闭串口监听服务器完成");
-                        $("#stopbtn").hide();
-                        $("#startbtn").show();
+                        }
+                        if (data == 0) {
+                            alert("关闭串口监听服务器完成");
+
+                        }
                     }
 
                 },

@@ -2,17 +2,22 @@ package com.hexin.user.serialfull;
 
 
 
+import com.hexin.user.constants.Constans;
+import com.hexin.user.model.PigPound;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWidthService;
 import com.hexin.user.utils.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 监听单片机指令串口2发送过来的的指令 COM5.
+ * 监听单片机指令串口2发送过来的的指令 COM7 单数.
  * User: lyh
  * Date: 2017/12/16
  * Time: 16:56
@@ -24,6 +29,7 @@ public class SerialCom5Observable implements Observer {
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static PigWidthService pigWidthServicelocal;
+    private static PigPoundService pigPoundService;
     private static SerialComLaser5Observable serialComLaser5Observable ;
     private  SerialCom5 sr = new SerialCom5();
     private static int initIndex = 0;
@@ -32,8 +38,9 @@ public class SerialCom5Observable implements Observer {
 
     }
 
-    public SerialCom5Observable(PigWidthService pigWidthService){
+    public SerialCom5Observable(PigWidthService pigWidthService,PigPoundService pigPoundService){
         this.pigWidthServicelocal = pigWidthService;
+        this.pigPoundService = pigPoundService;
         serialComLaser5Observable = new SerialComLaser5Observable(pigWidthService);
     }
 
@@ -132,7 +139,6 @@ public class SerialCom5Observable implements Observer {
     @Override
     public void update(Observable o, Object message) {
         //TODO 处理激光2指令数据
-        //LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
         byte[] result = (byte[])message;
         String hexstr = ByteUtil.BinaryToHexString((byte[])message).replace(" ","");
         if("03".equals(hexstr)){//接到手机数据的指令，则取发送指令取获取数据
@@ -148,6 +154,17 @@ public class SerialCom5Observable implements Observer {
             serialComLaser5Observable.deletePreData();
         }else if("07".equals(hexstr)){//扣款
             serialComLaser5Observable.refreshData();
+        }else if("08".equals(hexstr)){//处理批次更新命令08
+            LOGGER.info("[处理批次更新命令] 开始处理批次更新命令08");
+            String batchNum = JOptionPane.showInputDialog( "请输入批次号:");
+            System.out.println(batchNum);
+            PigPound pigPound = pigPoundService.selectOne();
+            pigPound.setBatchNum(batchNum);
+            pigPound.setCreateTime(new Date());
+            pigPoundService.update(pigPound);
+            Constans.poundData.put("batchNum",batchNum);
+            LOGGER.info("[处理批次更新命令] 处理批次更新命令08完成");
+
         }else if("09".equals(hexstr)){//种类降级
             serialComLaser5Observable.changeRankData();
         }else{

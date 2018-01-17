@@ -2,11 +2,16 @@ package com.hexin.user.serialfull;
 
 
 
+import com.hexin.user.constants.Constans;
+import com.hexin.user.model.PigPound;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWidthService;
 import com.hexin.user.utils.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -25,14 +30,16 @@ public class SerialCom3Observable implements Observer {
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static PigWidthService pigWidthServicelocal;
+    private static PigPoundService pigPoundService;
     private  SerialCom3 sr = new SerialCom3();
     private static SerialComLaser3Observable serialComLaser3Observable ;
     public SerialCom3Observable(){
 
     }
 
-    public SerialCom3Observable(PigWidthService pigWidthService){
+    public SerialCom3Observable(PigWidthService pigWidthService,PigPoundService pigPoundService){
         this.pigWidthServicelocal = pigWidthService;
+        this.pigPoundService = pigPoundService;
         serialComLaser3Observable  = new SerialComLaser3Observable(pigWidthService);
     }
 
@@ -143,6 +150,17 @@ public class SerialCom3Observable implements Observer {
             hexdata[4]=(byte)(0x03);
             hexdata[5]=(byte)(0xF2);
             serialComLaser3Observable.send(hexdata);
+        }else if("08".equals(hexstr)){//处理批次更新命令08
+            LOGGER.info("[处理批次更新命令] 开始处理批次更新命令08");
+            String batchNum = JOptionPane.showInputDialog( "请输入批次号:");
+            System.out.println(batchNum);
+            PigPound pigPound = pigPoundService.selectOne();
+            pigPound.setBatchNum(batchNum);
+            pigPound.setCreateTime(new Date());
+            pigPoundService.update(pigPound);
+            Constans.poundData.put("batchNum",batchNum);
+            LOGGER.info("[处理批次更新命令] 处理批次更新命令08完成");
+
         }else if("09".equals(hexstr)){//降级
             serialComLaser3Observable.changeRankData();
         }else if("05".equals(hexstr)){//删除

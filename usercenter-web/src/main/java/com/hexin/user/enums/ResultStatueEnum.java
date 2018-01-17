@@ -19,7 +19,9 @@ public enum ResultStatueEnum {
     SERIAL_ERROR("04","串口配置异常" ),
     SERIAL_PORT_ERROR("06","串口异常" ),
     SERIAL_SEND_ERROR("05","串口数据发送异常" ),
-    USER_ERROR("07","用户名信息不存在" );
+    USER_ERROR("07","用户名信息不存在" ),
+    BATCH_DATA_NOT_EXISTS("08", "批次数据不存在！请录入"),
+    POUND_DATA_NOT_EXISTS("07", "地磅数据不存在！请录入");
 
     private String code;
     private String msg;

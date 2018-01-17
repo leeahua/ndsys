@@ -1,7 +1,10 @@
 package com.hexin.user.constants;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,6 +17,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Constans {
 
     public static String isOpen ;
+
+    public static Map<String,String> poundData = new HashMap<>();
 
 
 

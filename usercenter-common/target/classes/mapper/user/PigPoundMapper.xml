@@ -8,12 +8,12 @@
     <resultMap id="pigPound" type="com.hexin.user.model.PigPound">
         <id property="id" column="id"/>
         <result property="botpounds" column="botpounds"/>
-        <result property="chargeMan" column="charge_man"/>
+        <result property="batchNum" column="batch_num"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
     <sql id="columns">
-            `id` ,`botpounds` ,`create_time`,charge_man
+            `id` ,`botpounds` ,`create_time`,batch_num
     </sql>
 
     <insert id="insert">
@@ -28,8 +28,8 @@
             <if test="createTime != null">
                 `create_time`,
             </if>
-            <if test="chargeMan != null">
-                `charge_man`,
+            <if test="batchNum != null">
+                `batch_num`,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -42,8 +42,8 @@
             <if test="createTime != null">
             #{createTime} ,
             </if>
-            <if test="chargeMan != null">
-                #{chargeMan} ,
+            <if test="batchNum != null">
+                #{batchNum} ,
             </if>
         </trim>
     </insert>
@@ -60,8 +60,8 @@
             <if test="createTime != null">
                 and `create_time` = #{createTime}
             </if>
-            <if test="chargeMan != null">
-                and `charge_man` = #{chargeMan}
+            <if test="batchNum != null">
+                and `batch_num` = #{batchNum}
             </if>
         </trim>
     </delete>
@@ -83,8 +83,8 @@
                 <if test="createTime != null">
                     `create_time` = #{createTime},
                 </if>
-                <if test="chargeMan != null">
-                    `charge_man` = #{chargeMan}
+                <if test="batchNum != null">
+                    `batch_num` = #{batchNum}
                 </if>
         </set>
         where id = #{id}
@@ -104,10 +104,18 @@
             <if test="createTime != null">
                 and `create_time` = #{createTime}
             </if>
-            <if test="chargeMan != null">
-                and `charge_man` = #{chargeMan}
+            <if test="batchNum != null">
+                and `batch_num` = #{batchNum}
             </if>
         </trim>
+    </select>
+
+    <select id="selectOne" resultMap="pigPound">
+        select
+        <include refid="columns" />
+        from `pig_pound`
+        order by id desc limit 1
+
     </select>
 
     <select id="selectByPage" resultMap="pigPound" parameterType="com.hexin.user.vo.PigPoundsVO">
@@ -127,8 +135,8 @@
             <if test="endTime != null">
                 and `create_time` &lt;= #{endTime,jdbcType=DATE}
             </if>
-            <if test="chargeMan != null">
-                and `charge_man` = #{chargeMan}
+            <if test="batchNum != null">
+                and `batch_num` = #{batchNum}
             </if>
         </trim>
           order by create_time desc
@@ -153,8 +161,8 @@
             <if test="endTime != null">
                 and `create_time` &lt;= #{endTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="chargeMan != null">
-                and `charge_man` = #{chargeMan}
+            <if test="batchNum != null">
+                and `batch_num` = #{batchNum}
             </if>
         </trim>
     </select>
