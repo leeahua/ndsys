@@ -1,6 +1,9 @@
 package com.hexin.user.utils;
 
+import com.hexin.user.constants.Constans;
+
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -420,13 +423,11 @@ public class StringUtil {
 	}
 
 	public static void main(String[] args) {
-   		String str = "10.21";
-   		String hexStr = StringUtil.str2HexStr(str);
-   		Double dpu = 12.223;
-   		System.out.println(dpu.byteValue());
-   		System.out.println(str + "--10 2 16-->"+hexStr);
-   		String hexStr2 = "0x02";
-   		System.out.println(StringUtil.hexStr2Bytes(hexStr2));
 
+
+		BigDecimal avg2 = new BigDecimal("33.44");
+		Double botweight = Double.valueOf("22.44");
+		BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2,BigDecimal.ROUND_CEILING);
+		System.out.print(pigW);
 	}
 }

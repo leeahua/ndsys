@@ -4,6 +4,7 @@ package com.hexin.user.serialfull;
 
 import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWeight;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.utils.ByteUtil;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ import java.util.*;
 public class SerialCom2Observable implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SerialCom2Observable.class);
     private static final String PORT = "COM2"; //端口名
-    private static final String RATE = "9600"; //波特率
+    private static final String RATE = "38400"; //波特率
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static int initIndex = 0;
@@ -209,9 +210,9 @@ public class SerialCom2Observable implements Observer {
                     avg2 = sum2.divide(leng,2,BigDecimal.ROUND_CEILING);
                     PigWeight pigWeight = new PigWeight();
                     pigWeight.setChargeMan("admin");
-                    pigWeight.setPigWeight(avg2);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
-                    String batchNo = sdf.format(new Date());
+                    Double botweight = Double.valueOf(Constans.poundData.get("pound"));
+                    BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2,BigDecimal.ROUND_CEILING);
+                    pigWeight.setPigWeight(pigW);
                     pigWeight.setPigBatchNo(Constans.poundData.get("batchNum")==null?"":Constans.poundData.get("batchNum"));
                     pigWeight.setPigNum(String.format("%05d",++initIndex));
                     this.pigWeightService.insert(pigWeight);

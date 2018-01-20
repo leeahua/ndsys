@@ -22,7 +22,7 @@ import java.util.*;
 public class SerialComLaser3Observable implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SerialComLaser3Observable.class);
     private static final String PORT = "COM5"; //端口名
-    private static final String RATE = "19200"; //波特率
+    private static final String RATE = "9600"; //波特率
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static PigWidthService pigWidthServicelocal;
