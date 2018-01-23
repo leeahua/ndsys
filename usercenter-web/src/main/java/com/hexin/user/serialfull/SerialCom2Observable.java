@@ -136,20 +136,10 @@ public class SerialCom2Observable implements Observer {
         return params;
     }
 
-   /* // 静态内部类
-    private static class NestClass {
-        private static  SerialCom2Observable  serialCom2Observable;
-        static {
-            serialCom2Observable = new SerialCom2Observable();
 
-
-        }
-    }*/
 
     @Override
     public void update(Observable o, Object message) {
-
-        //TODO 处理电子磅的数据信息 COM2
         //处理电子磅
         byte[] result = (byte[])message;
         if(result.length%18!=0){
@@ -183,7 +173,7 @@ public class SerialCom2Observable implements Observer {
             if(wt>15){
                 dataflag = true;
                 if(data.size()>0) {
-                    if (Math.abs(wt - data.peek()) >= 0 && Math.abs(wt - data.peek()) < 0.5) {
+                    if (Math.abs(wt - data.peek()) >= 0 && Math.abs(wt - data.peek()) <= 0.5) {
                         data.push(wt);
                     }
                 }else{

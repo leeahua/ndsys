@@ -68,10 +68,12 @@
       <file leaf-file-name="SerialCom2Observable.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2Observable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+            <state relative-caret-position="3313">
+              <caret line="202" column="49" lean-forward="true" selection-start-line="202" selection-start-column="49" selection-end-line="202" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#7188#7189#0" expanded="true" />
+                <element signature="e#7221#7222#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,18 +92,8 @@
       <file leaf-file-name="SerialCom3Observable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom3Observable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="163" column="42" lean-forward="true" selection-start-line="163" selection-start-column="42" selection-end-line="163" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PigPoundController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/PigPoundController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1273">
-              <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+            <state relative-caret-position="496">
+              <caret line="162" column="0" lean-forward="true" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -110,8 +102,8 @@
       <file leaf-file-name="SerialComLaser3Observable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser3Observable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2755">
-              <caret line="162" column="30" lean-forward="false" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="30" />
+            <state relative-caret-position="2169">
+              <caret line="228" column="54" lean-forward="false" selection-start-line="228" selection-start-column="51" selection-end-line="228" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -1242,7 +1234,7 @@
       <workItem from="1513605019233" duration="12186000" />
       <workItem from="1515811303317" duration="15381000" />
       <workItem from="1516198825886" duration="32000" />
-      <workItem from="1516689832048" duration="191000" />
+      <workItem from="1516689832048" duration="1919000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1513510629559</created>
@@ -1265,7 +1257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513639129588</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="修改电子磅的端口">
+      <created>1516690044861</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1516690044861</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1301,7 +1300,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="282372000" />
+    <option name="totallyTimeSpent" value="284100000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1328,7 +1327,7 @@
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297546" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297546" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26323318" sideWeight="0.4903846" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23891273" sideWeight="0.4903846" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28373984" sideWeight="0.50961536" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="EvoSuite" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -1408,7 +1407,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="最后处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="最后处理" />
+    <MESSAGE value="修改电子磅的端口" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改电子磅的端口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1824,14 +1824,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser3Observable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2755">
-          <caret line="162" column="30" lean-forward="false" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigPoundMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1178">
@@ -1858,18 +1850,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom3Observable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="163" column="42" lean-forward="true" selection-start-line="163" selection-start-column="42" selection-end-line="163" selection-end-column="42" />
+        <state relative-caret-position="496">
+          <caret line="162" column="0" lean-forward="true" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser3Observable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2169">
+          <caret line="228" column="54" lean-forward="false" selection-start-line="228" selection-start-column="51" selection-end-line="228" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2Observable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        <state relative-caret-position="3313">
+          <caret line="202" column="49" lean-forward="true" selection-start-line="202" selection-start-column="49" selection-end-line="202" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7188#7189#0" expanded="true" />
+            <element signature="e#7221#7222#0" expanded="true" />
           </folding>
         </state>
       </provider>
