@@ -4,17 +4,15 @@ package com.hexin.user.serialfull;
 
 import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWeight;
-import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.utils.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 监听电子磅数据串口信息 COM2.
+ * 监听电子磅数据串口信息 COM1.
  * User: lyh
  * Date: 2017/12/16
  * Time: 16:56
@@ -22,7 +20,7 @@ import java.util.*;
 
 public class SerialCom2Observable implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SerialCom2Observable.class);
-    private static final String PORT = "COM2"; //端口名
+    private static final String PORT = "COM1"; //端口名
     private static final String RATE = "38400"; //波特率
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
