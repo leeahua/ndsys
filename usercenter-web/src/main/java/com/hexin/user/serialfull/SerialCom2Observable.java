@@ -172,13 +172,7 @@ public class SerialCom2Observable implements Observer {
             Double wt = Double.valueOf(weight.substring(3,6))/10.0;
             if(wt>15){
                 dataflag = true;
-                if(data.size()>0) {
-                    if (Math.abs(wt - data.peek()) >= 0 && Math.abs(wt - data.peek()) <= 0.5) {
-                        data.push(wt);
-                    }
-                }else{
-                    data.push(wt);
-                }
+                data.push(wt);
                 LOGGER.info("解析数值:{}",wt);
                 continue;
             }else{
@@ -191,11 +185,38 @@ public class SerialCom2Observable implements Observer {
                     double sum = 0.0;
                     BigDecimal sum2 = new BigDecimal(0.0);
                     BigDecimal avg2 = new BigDecimal(0.0);
-                    for(int m=0;m<doubles.length;m++){
-                        sum2 =sum2.add(new BigDecimal(Double.toString(doubles[m])));
+                    if(doubles.length==4){
+                        sum2 = sum2.add(new BigDecimal(Double.toString(doubles[1])))
+                                .add(new BigDecimal(Double.valueOf(doubles[2])));
+                        avg2 = sum2.divide(new BigDecimal(Double.toString(2)),2,BigDecimal.ROUND_CEILING);
+                    }else if(doubles.length<4){
+                        for(int m=0;m<doubles.length;m++){
+                            sum2 =sum2.add(new BigDecimal(Double.toString(doubles[m])));
+                        }
+                        BigDecimal leng = new BigDecimal(Double.toString(doubles.length));
+                        avg2 = sum2.divide(leng,2,BigDecimal.ROUND_CEILING);
+                    }else{
+                        int length = doubles.length;
+                        int tagIndex = length/2;
+                        if(length%2==0){
+                            sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex])))
+                            .add(new BigDecimal(Double.toString(doubles[tagIndex-1])));
+                            if(Math.abs(doubles[tagIndex-1]-doubles[tagIndex-2])>Math.abs(doubles[tagIndex]-doubles[tagIndex+1])){
+                                sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex+1])));
+                            }else{
+                                sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex-2])));
+                            }
+
+                        }else{
+                            sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex])))
+                                    .add(new BigDecimal(Double.toString(doubles[tagIndex-1])))
+                                    .add(new BigDecimal(Double.toString(doubles[tagIndex+1])));
+                        }
+                        avg2 = sum2.divide(new BigDecimal(3.0),2,BigDecimal.ROUND_CEILING);
+
                     }
-                    BigDecimal leng = new BigDecimal(Double.toString(doubles.length));
-                    avg2 = sum2.divide(leng,2,BigDecimal.ROUND_CEILING);
+
+
                     PigWeight pigWeight = new PigWeight();
                     pigWeight.setChargeMan("admin");
                     Double botweight = Double.valueOf(Constans.poundData.get("pound"));
