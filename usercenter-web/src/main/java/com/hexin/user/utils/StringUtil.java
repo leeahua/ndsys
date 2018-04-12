@@ -422,6 +422,54 @@ public class StringUtil {
 		return result;
 	}
 
+
+	public static String frontCompWithZore(int sourceDate,int formatLength){
+		String newString = String.format("%0"+formatLength+"d", sourceDate);
+		return newString;
+	}
+	public static byte[] encyData(String data){
+		byte[] result = new byte[8];
+
+
+		for(int i=0;i<data.length();i++){
+			char cha = data.charAt(i);
+			result[i]=coverChar(cha);
+		}
+		return result;
+	}
+	public static byte coverChar(char cha){
+		switch(cha)
+		{
+			case '0':
+				return (byte)(0x3F);
+			case '1':
+				return (byte)(0x06);
+			case '2':
+				return (byte)(0x5B);
+			case '3':
+				return (byte)(0x4F);
+			case '4':
+				return (byte)(0x66);
+
+			case '5':
+				return (byte)(0x6D);
+
+			case '6':
+				return (byte)(0x7D);
+			case '7':
+				return (byte)(0x07);
+				//ListLED[7-t1]=0x07;break;
+			case '8':
+				return (byte)(0x7F);
+				//ListLED[7-t1]=0x7F;break;
+			case '9':
+				return (byte)(0x6F);
+				//ListLED[7-t1]=0x6F;break;
+			default:
+				return (byte)((0x3F));
+		}
+	}
+
 	public static void main(String[] args) {
 
 
@@ -429,5 +477,15 @@ public class StringUtil {
 		Double botweight = Double.valueOf("22.44");
 		BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2,BigDecimal.ROUND_CEILING);
 		System.out.print(pigW);
+        String hex = "FB72";
+        Integer x = Integer.parseInt(hex,16);
+        System.out.println("-----------------"+x);
+        double widthdouble = Double.valueOf(Integer.parseInt(hex,16)+"");
+        System.out.println("-----------------"+widthdouble);
+		/*String hexstr = "FB72";
+		Double dd = Double.parseDouble(hexstr,16);
+		System.out.println(dd);*/
+		System.out.println(frontCompWithZore(2,3));
+		System.out.println("00013000---->"+encyData("00013000"));
 	}
 }

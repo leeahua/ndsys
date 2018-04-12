@@ -34,14 +34,14 @@ public class SerialCom5Observable implements Observer {
     private  SerialCom5 sr = new SerialCom5();
     private static int initIndex = 0;
 
-    private SerialCom5Observable(){
+    public SerialCom5Observable(){
 
     }
 
     public SerialCom5Observable(PigWidthService pigWidthService,PigPoundService pigPoundService){
         this.pigWidthServicelocal = pigWidthService;
         this.pigPoundService = pigPoundService;
-        serialComLaser5Observable = new SerialComLaser5Observable(pigWidthService);
+        serialComLaser5Observable = new SerialComLaser5Observable(pigWidthService,this);
     }
 
     public void close(){

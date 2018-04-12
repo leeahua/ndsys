@@ -6,6 +6,7 @@ import com.hexin.user.constants.Constans;
 import com.hexin.user.model.PigWidth;
 import com.hexin.user.service.user.PigWidthService;
 import com.hexin.user.utils.ByteUtil;
+import com.hexin.user.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,13 +30,18 @@ public class SerialComLaser3Observable implements Observer {
     private static int initIndex = 2;
     private static int preIndex = -1;
     private  SerialComLaser3 sr = new SerialComLaser3();
-
+    private static SerialCom3Observable serialCom3Observable;
     public SerialComLaser3Observable(){
 
     }
 
-    public SerialComLaser3Observable(PigWidthService pigWidthService){
-        this.pigWidthServicelocal = pigWidthService;
+    public SerialComLaser3Observable(PigWidthService pigWidthService,SerialCom3Observable serialCom3Observable){
+        if(this.pigWidthServicelocal==null) {
+            this.pigWidthServicelocal = pigWidthService;
+        }
+        if(this.serialCom3Observable==null) {
+            this.serialCom3Observable = serialCom3Observable;
+        }
     }
 
     public void close(){
@@ -131,6 +137,16 @@ public class SerialComLaser3Observable implements Observer {
         return params;
     }
 
+    private byte[] covertData(Integer seq,Integer width){
+        String seqStr = StringUtil.frontCompWithZore(seq,4);
+        String widthStr = StringUtil.frontCompWithZore(width,4);
+        String str = seqStr + widthStr;
+        LOGGER.info("seqStr:{},widthStr:{},result before ency :{}",seqStr,widthStr,str);
+        byte[] result = StringUtil.encyData(seqStr+widthStr);
+        LOGGER.info("seqStr:{},widthStr:{},result before ency :{},result:{}",seqStr,widthStr,str,result);
+        return result;
+    }
+
     @Override
     public void update(Observable o, Object message) {
         LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
@@ -138,11 +154,24 @@ public class SerialComLaser3Observable implements Observer {
         if(!(result.length==6)){
             LOGGER.error("激光测量2数据位错误");
         }
-        String ss = new String(result);
         String hexstr = ByteUtil.BinaryToHexString((byte[])message).replace(" ","").substring(4,8);
+        LOGGER.info("需要存储的数据:{}", hexstr);
         //将获取的十六进制数据转化为十进制
-        String width = ByteUtil.hexString2String(hexstr);
-        double widthdouble = Double.valueOf(width);
+        Integer data = Integer.parseInt(hexstr,16);
+        LOGGER.info("接收数据转十进制为：{}",data);
+        if(2300<data && data <=61440){
+            LOGGER.info("非法数据不处理：{}",data);
+            return;
+        }
+        if(data>61440){
+            data = 65536 - data;
+            data = 2300 + data;
+        }else{
+            data = 2300 - data;
+        }
+        data = (data-100)/100*100;
+        double widthdouble = Double.valueOf(data+"");
+        LOGGER.info("入库数据:{}", widthdouble);
         int  rank = 5;
         if(widthdouble<17){
             rank = 1;
@@ -161,12 +190,18 @@ public class SerialComLaser3Observable implements Observer {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         String batchNo = sdf.format(new Date());
         pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
+        LOGGER.info("batchNo:{}", batchNo);
+        if(initIndex!=2) {
+            initIndex = initIndex + 2;
+        }
         pigWidth.setPigNum(String.format("%05d",initIndex));
-        initIndex = initIndex +2;
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble).setScale(2,BigDecimal.ROUND_CEILING));
         pigWidthServicelocal.insert(pigWidth);
+        LOGGER.info("入库成功:{}", batchNo);
         preIndex = pigWidth.getId();
+        byte[] backDate = covertData(initIndex,data);
+        serialCom3Observable.send(backDate);
     }
 
     /**

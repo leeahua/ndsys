@@ -31,12 +31,18 @@ public class SerialComLaser5Observable implements Observer {
     private  SerialComLaser5 sr = new SerialComLaser5();
     private static int initIndex = 1;
     private static int preIndex = -1;
+    private static  SerialCom5Observable serialCom5Observable;
     public SerialComLaser5Observable(){
 
     }
 
-    public SerialComLaser5Observable(PigWidthService pigWidthService){
-        this.pigWidthServicelocal = pigWidthService;
+    public SerialComLaser5Observable(PigWidthService pigWidthService,SerialCom5Observable serialCom5Observable){
+        if(this.pigWidthServicelocal==null) {
+            this.pigWidthServicelocal = pigWidthService;
+        }
+        if(this.serialCom5Observable==null) {
+            this.serialCom5Observable = serialCom5Observable;
+        }
     }
 
     public void close(){
@@ -130,7 +136,15 @@ public class SerialComLaser5Observable implements Observer {
         params.put( SerialCom2.PARAMS_DELAY, DELAY ); // 端口数据准备时间 1秒
         return params;
     }
-
+    private byte[] covertData(Integer seq,Integer width){
+        String seqStr = StringUtil.frontCompWithZore(seq,4);
+        String widthStr = StringUtil.frontCompWithZore(width,4);
+        String str = seqStr + widthStr;
+        LOGGER.info("seqStr:{},widthStr:{},result before ency :{}",seqStr,widthStr,str);
+        byte[] result = StringUtil.encyData(seqStr+widthStr);
+        LOGGER.info("seqStr:{},widthStr:{},result before ency :{},result:{}",seqStr,widthStr,str,result);
+        return result;
+    }
     @Override
     public void update(Observable o, Object message) {
         LOGGER.info("接收hex消息：{}", ByteUtil.BinaryToHexString((byte[])message));
@@ -141,8 +155,18 @@ public class SerialComLaser5Observable implements Observer {
         String ss = new String(result);
         String hexstr = ByteUtil.BinaryToHexString((byte[])message).replace(" ","").substring(4,8);
         //将获取的十六进制数据转化为十进制
-        String width = ByteUtil.hexString2String(hexstr);
-        double widthdouble = Double.valueOf(width);
+        Integer data = Integer.parseInt(hexstr,16);
+        LOGGER.info("接收数据转十进制为：{}",data);
+        if(data>61000){
+            data = 65536 - data;
+            data = 2300 + data;
+        }else{
+            data = 2300 - data;
+        }
+        data = (data-100)/100*100;
+        double widthdouble = Double.valueOf(data+"");
+        LOGGER.info("入库数据:{}", widthdouble);
+        //double widthdouble = Double.valueOf(width);
         int  rank = 5;
         if(widthdouble<17){
             rank = 1;
@@ -161,12 +185,17 @@ public class SerialComLaser5Observable implements Observer {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         String batchNo = sdf.format(new Date());
         pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
+        if(initIndex!=1) {
+            initIndex = initIndex + 2;
+        }
         pigWidth.setPigNum(String.format("%05d",initIndex));
-        initIndex = initIndex +2;
+
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble));
         pigWidthServicelocal.insert(pigWidth);
         preIndex = pigWidth.getId();
+        byte[] backDate = covertData(initIndex,data);
+        serialCom5Observable.send(backDate);
     }
 
 

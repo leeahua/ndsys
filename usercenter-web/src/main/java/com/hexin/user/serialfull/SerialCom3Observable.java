@@ -40,7 +40,7 @@ public class SerialCom3Observable implements Observer {
     public SerialCom3Observable(PigWidthService pigWidthService,PigPoundService pigPoundService){
         this.pigWidthServicelocal = pigWidthService;
         this.pigPoundService = pigPoundService;
-        serialComLaser3Observable  = new SerialComLaser3Observable(pigWidthService);
+        serialComLaser3Observable  = new SerialComLaser3Observable(pigWidthService,this);
     }
 
     public void close(){
