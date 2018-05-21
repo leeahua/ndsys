@@ -191,9 +191,6 @@ public class SerialComLaser3Observable implements Observer {
         String batchNo = sdf.format(new Date());
         pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
         LOGGER.info("batchNo:{}", batchNo);
-        if(initIndex!=2) {
-            initIndex = initIndex + 2;
-        }
         pigWidth.setPigNum(String.format("%05d",initIndex));
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble).setScale(2,BigDecimal.ROUND_CEILING));
@@ -202,6 +199,7 @@ public class SerialComLaser3Observable implements Observer {
         preIndex = pigWidth.getId();
         byte[] backDate = covertData(initIndex,data);
         serialCom3Observable.send(backDate);
+        initIndex = initIndex + 2;
     }
 
     /**

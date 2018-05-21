@@ -28,6 +28,7 @@ public class SerialCom2Observable implements Observer {
     private  SerialCom2 sr = new SerialCom2();
     private  boolean dataflag = false;
     private Stack<Double> data = new Stack<>();
+    private List<Double> lowdata = new ArrayList<>();
     private  PigWeightService pigWeightService;
 
     public  SerialCom2Observable(PigWeightService serialService){
@@ -140,8 +141,10 @@ public class SerialCom2Observable implements Observer {
 
     @Override
     public void update(Observable o, Object message) {
+        LOGGER.info("-------------------当前处理线程：{} 开始",Thread.currentThread().getName());
         //处理电子磅
         byte[] result = (byte[])message;
+        System.out.println("======================"+result.length);
         if(result.length%18!=0){
             LOGGER.error("数据位丢失，长度不是18的倍数");
             String str = new String((byte[])message);
@@ -163,21 +166,37 @@ public class SerialCom2Observable implements Observer {
             }
 
         }
+        LOGGER.info("-------------------当前处理线程：{} 结束",Thread.currentThread().getName());
     }
-
+    private Double byteToDouble(byte[] data){
+        String hexstr = ByteUtil.BinaryToHexString(data).replace(" ","").substring(8,32);
+        String weight = ByteUtil.hexString2String(hexstr);
+        Double wt = Double.valueOf(weight.substring(3,6))/10.0;
+        return wt;
+    }
     private void handleData(List<byte[]> dataList) {
-        for(byte[] message : dataList){
-            String hexstr = ByteUtil.BinaryToHexString(message).replace(" ","").substring(8,32);
-            String weight = ByteUtil.hexString2String(hexstr);
-            Double wt = Double.valueOf(weight.substring(3,6))/10.0;
-            if(wt>15){
+        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
+        for(int i=1;i<dataList.size();i++){
+            byte[] message =  dataList.get(i);
+
+            Double wt = byteToDouble(message);
+            LOGGER.info("-------------------接收数据位:{}",wt);
+            if(wt>25){
                 dataflag = true;
-                data.push(wt);
-                LOGGER.info("解析数值:{}",wt);
+                Double beforWt = byteToDouble( dataList.get(i-1));
+                if(Math.abs(wt-beforWt)<=0.5){
+                    data.push(wt);
+                    LOGGER.info("解析数值:{}",wt);
+                }
+                lowdata.clear();
                 continue;
             }else{
                 if(dataflag){
                     if(data.size()==0)continue;
+                    if(wt<=15){
+                        lowdata.add(wt);
+                    }
+                    if(lowdata.size()<=3) continue;
                     Double[] doubles = new Double[data.size()];
                     data.toArray(doubles);
                     Arrays.sort(doubles);
@@ -185,7 +204,12 @@ public class SerialCom2Observable implements Observer {
                     double sum = 0.0;
                     BigDecimal sum2 = new BigDecimal(0.0);
                     BigDecimal avg2 = new BigDecimal(0.0);
-                    if(doubles.length==4){
+
+                    for(Double dataDou:doubles){
+                        sum2 = sum2.add(new BigDecimal(Double.toString(dataDou)));
+                    }
+                    avg2 = sum2.divide(new BigDecimal(Double.toString(doubles.length)),2,BigDecimal.ROUND_CEILING);
+                    /*if(doubles.length==4){
                         sum2 = sum2.add(new BigDecimal(Double.toString(doubles[1])))
                                 .add(new BigDecimal(Double.valueOf(doubles[2])));
                         avg2 = sum2.divide(new BigDecimal(Double.toString(2)),2,BigDecimal.ROUND_CEILING);
@@ -200,7 +224,7 @@ public class SerialCom2Observable implements Observer {
                         int tagIndex = length/2;
                         if(length%2==0){
                             sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex])))
-                            .add(new BigDecimal(Double.toString(doubles[tagIndex-1])));
+                                    .add(new BigDecimal(Double.toString(doubles[tagIndex-1])));
                             if(Math.abs(doubles[tagIndex-1]-doubles[tagIndex-2])>Math.abs(doubles[tagIndex]-doubles[tagIndex+1])){
                                 sum2 = sum2.add(new BigDecimal(Double.toString(doubles[tagIndex+1])));
                             }else{
@@ -215,7 +239,7 @@ public class SerialCom2Observable implements Observer {
                         avg2 = sum2.divide(new BigDecimal(3.0),2,BigDecimal.ROUND_CEILING);
 
                     }
-
+*/
 
                     PigWeight pigWeight = new PigWeight();
                     pigWeight.setChargeMan("admin");
@@ -230,8 +254,9 @@ public class SerialCom2Observable implements Observer {
                 }
 
             }
-            LOGGER.info("解析数据位：{},对应十进制数为：{}",hexstr,weight);
+
         }
+        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
     }
 
     private void putData(Double wt) {

@@ -185,17 +185,14 @@ public class SerialComLaser5Observable implements Observer {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         String batchNo = sdf.format(new Date());
         pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
-        if(initIndex!=1) {
-            initIndex = initIndex + 2;
-        }
         pigWidth.setPigNum(String.format("%05d",initIndex));
-
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble));
         pigWidthServicelocal.insert(pigWidth);
         preIndex = pigWidth.getId();
         byte[] backDate = covertData(initIndex,data);
         serialCom5Observable.send(backDate);
+        initIndex = initIndex + 2;
     }
 
 

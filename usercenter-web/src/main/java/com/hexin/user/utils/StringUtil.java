@@ -1,12 +1,15 @@
 package com.hexin.user.utils;
 
 import com.hexin.user.constants.Constans;
+import com.hexin.user.model.PigWeight;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Stack;
 
 
 public class StringUtil {
@@ -34,19 +37,15 @@ public class StringUtil {
 
 	/**
 	 * 比较第一个数组中的 元素是否和 bt2 中相同 （从srcPos开始比较）
-	 * 
-	 * @param src
-	 *            被比较的byte数组
-	 * @param srcPos
-	 *            开始点
-	 * @param bt2
-	 *            目标数组
-	 * @param length
-	 *            长度
+	 *
+	 * @param src    被比较的byte数组
+	 * @param srcPos 开始点
+	 * @param bt2    目标数组
+	 * @param length 长度
 	 * @return
 	 */
 	public static boolean isEqualsByte(byte[] src, int srcPos, byte[] bt2,
-			int length) {
+									   int length) {
 
 		byte[] temp = new byte[length];
 		System.arraycopy(src, srcPos, temp, 0, length);
@@ -57,17 +56,14 @@ public class StringUtil {
 
 	/**
 	 * 字符串格式化为日期时间格式
-	 * 
-	 * @param format
-	 *            原来格式 yyyyMMdd HHmmss
-	 * @param toformat
-	 *            目标格式 yyyy-MM-dd HH:mm:ss
-	 * @param time
-	 *            时间或日期
+	 *
+	 * @param format   原来格式 yyyyMMdd HHmmss
+	 * @param toformat 目标格式 yyyy-MM-dd HH:mm:ss
+	 * @param time     时间或日期
 	 * @return 目标日期时间字符串
 	 */
 	public static String str2DateTime(String format, String toformat,
-			String time) {
+									  String time) {
 		String str = "";
 		Date date;
 
@@ -85,7 +81,7 @@ public class StringUtil {
 
 	/**
 	 * short转换为字节
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -102,7 +98,7 @@ public class StringUtil {
 
 	/**
 	 * short转换为字节
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -119,7 +115,7 @@ public class StringUtil {
 
 	/**
 	 * short[]转换为字节[]
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -136,7 +132,7 @@ public class StringUtil {
 
 	/**
 	 * byte[]到Short
-	 * 
+	 *
 	 * @param buf
 	 * @return
 	 */
@@ -154,7 +150,7 @@ public class StringUtil {
 
 	/**
 	 * 字符串转换成十六进制字符串
-	 * 
+	 *
 	 * @param str 待转换的ASCII字符串
 	 * @return String 每个Byte之间空格分隔，如: [61 6C 6B]
 	 */
@@ -177,7 +173,7 @@ public class StringUtil {
 
 	/**
 	 * 十六进制转换字符串
-	 * 
+	 *
 	 * @param hexStr Byte字符串(Byte之间无分隔符 如:[616C6B])
 	 * @return String 对应的字符串
 	 */
@@ -203,12 +199,12 @@ public class StringUtil {
 
 	/**
 	 * bytes转换成十六进制字符串
-	 * 
-	 * @param  b byte数组
+	 *
+	 * @param b byte数组
 	 * @return String 每个Byte值之间空格分隔
 	 */
 	public static String byte2HexStr(byte[] b) {
-		if(b == null)
+		if (b == null)
 			return "";
 		String stmp = "";
 		StringBuilder sb = new StringBuilder("");
@@ -222,15 +218,14 @@ public class StringUtil {
 
 	/**
 	 * bytes字符串转换为Byte值
-	 * 
-	 * @param
-	 *            src Byte字符串，每个Byte之间没有分隔符
+	 *
+	 * @param src Byte字符串，每个Byte之间没有分隔符
 	 * @return byte[]
 	 */
 	public static byte[] hexStr2Bytes(String src) {
 		int m = 0, n = 0;
-		if((src.length()%2)!=0)
-			src = "0"+src;
+		if ((src.length() % 2) != 0)
+			src = "0" + src;
 		int l = src.length() / 2;
 		//System.out.println(l);
 		byte[] ret = new byte[l];
@@ -246,9 +241,8 @@ public class StringUtil {
 
 	/**
 	 * String的字符串转换成unicode的String
-	 * 
-	 * @param
-	 *            strText 全角字符串
+	 *
+	 * @param strText 全角字符串
 	 * @return String 每个unicode之间无分隔符
 	 * @throws Exception
 	 */
@@ -272,9 +266,8 @@ public class StringUtil {
 
 	/**
 	 * unicode的String转换成String的字符串
-	 * 
-	 * @param
-	 *            hex 16进制值字符串 （一个unicode为2byte）
+	 *
+	 * @param hex 16进制值字符串 （一个unicode为2byte）
 	 * @return String 全角字符串
 	 */
 	public static String unicodeToString(String hex) {
@@ -296,10 +289,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * @author Junhua Wu
-	 * @param src
-	 *            byteêy×é 3¤?èó|μ±?a4
+	 * @param src byteêy×é 3¤?èó|μ±?a4
 	 * @return ×a??oóμ???Dí?á1? ×a??°′??D???×??úDòà′?D?¨
+	 * @author Junhua Wu
 	 */
 	public static int byteToInt(byte[] src) {
 		int tmp = 0;
@@ -311,10 +303,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * @author Junhua Wu
-	 * @param src
-	 *            ??Díêy?Y
+	 * @param src ??Díêy?Y
 	 * @return ×a??oóμ?byteêy×é?á1? ×a??°′??D???×??úDòà′?D?¨
+	 * @author Junhua Wu
 	 */
 	public static byte[] intToByte(int src) {
 		byte[] tmp = new byte[4];
@@ -342,131 +333,136 @@ public class StringUtil {
 		}
 		return result;
 	}
-    /* *
+
+	/* *
      * 
      * 把16进制字符串转换成字节数组 @param hex @return 
-     */  
-    public static byte[] hexStringToByte(String hex) {  
-        int len = (hex.length() / 2);  
-        byte[] result = new byte[len];  
-        char[] achar = hex.toCharArray();  
-        for (int i = 0; i < len; i++) {  
-            int pos = i * 2;  
-            result[i] = (byte) (toByte(achar[pos]) << 4 | toByte(achar[pos + 1]));  
-        }  
-        return result;  
-    }  
-  
-    private static byte toByte(char c) {  
-        byte b = (byte) "0123456789ABCDEF".indexOf(c);  
-        return b;  
-    }  
-  
-    /** 
-     * 把字节数组转换成16进制字符串 
-     *  
-     * @param bArray 
-     * @return 
-     */  
-    public static final String bytesToHexString(byte[] bArray) {  
-        StringBuffer sb = new StringBuffer(bArray.length);  
-        String sTemp;  
-        for (int i = 0; i < bArray.length; i++) {  
-            sTemp = Integer.toHexString(0xFF & bArray[i]);  
-            if (sTemp.length() < 2)  
-                sb.append(0);  
-            sb.append(sTemp.toUpperCase());  
-        }  
-        return sb.toString();  
-    }  
-    
-    public static final String bytesToBcdString(byte[] bArray) {
-        StringBuffer sb = new StringBuffer(bArray.length*2);  
-        for (int i = 0; i < bArray.length; i++) {  
-            sb.append(Character.toString((char) (0x30|((0xF0&bArray[i])>>4))));  
-            sb.append(Character.toString((char) (0x30|(0x0F&bArray[i]))));  
-        }  
-        return sb.toString(); 
-    }
-    public static byte[] bcdStr2Bytes(String src) {
+     */
+	public static byte[] hexStringToByte(String hex) {
+		int len = (hex.length() / 2);
+		byte[] result = new byte[len];
+		char[] achar = hex.toCharArray();
+		for (int i = 0; i < len; i++) {
+			int pos = i * 2;
+			result[i] = (byte) (toByte(achar[pos]) << 4 | toByte(achar[pos + 1]));
+		}
+		return result;
+	}
+
+	private static byte toByte(char c) {
+		byte b = (byte) "0123456789ABCDEF".indexOf(c);
+		return b;
+	}
+
+	/**
+	 * 把字节数组转换成16进制字符串
+	 *
+	 * @param bArray
+	 * @return
+	 */
+	public static final String bytesToHexString(byte[] bArray) {
+		StringBuffer sb = new StringBuffer(bArray.length);
+		String sTemp;
+		for (int i = 0; i < bArray.length; i++) {
+			sTemp = Integer.toHexString(0xFF & bArray[i]);
+			if (sTemp.length() < 2)
+				sb.append(0);
+			sb.append(sTemp.toUpperCase());
+		}
+		return sb.toString();
+	}
+
+	public static final String bytesToBcdString(byte[] bArray) {
+		StringBuffer sb = new StringBuffer(bArray.length * 2);
+		for (int i = 0; i < bArray.length; i++) {
+			sb.append(Character.toString((char) (0x30 | ((0xF0 & bArray[i]) >> 4))));
+			sb.append(Character.toString((char) (0x30 | (0x0F & bArray[i]))));
+		}
+		return sb.toString();
+	}
+
+	public static byte[] bcdStr2Bytes(String src) {
 		int m = 0, n = 0;
-		if((src.length()%2)!=0)
-			src = src+"?";
+		if ((src.length() % 2) != 0)
+			src = src + "?";
 		int l = src.length() / 2;
 		//System.out.println(l);
 		byte[] ret = new byte[l];
 		for (int i = 0; i < l; i++) {
-			m = i * 2 ;
+			m = i * 2;
 			n = m + 1;
-			ret[i] = (byte) ((src.charAt(m)&0x0F)<<4+(src.charAt(n)&0x0F));
+			ret[i] = (byte) ((src.charAt(m) & 0x0F) << 4 + (src.charAt(n) & 0x0F));
 		}
 		return ret;
 	}
-    public static byte[] intToByteArray(int i) {
+
+	public static byte[] intToByteArray(int i) {
 		byte[] targets = new byte[4];
 		targets[0] = (byte) (i & 0xFF);
-		targets[1] = (byte) ((i>>8) & 0xFF);
-		targets[2] = (byte) ((i>>16) & 0xFF);
-		targets[3] = (byte) ((i>>24) & 0xFF);
+		targets[1] = (byte) ((i >> 8) & 0xFF);
+		targets[2] = (byte) ((i >> 16) & 0xFF);
+		targets[3] = (byte) ((i >> 24) & 0xFF);
 		return targets;
 	}
-    
-   /**
-    * 把字节数组转化成int类型，小端模式
-    * @param b
-    * @return
-    */
-   public static int byteArrayToInt(byte[] b) {
+
+	/**
+	 * 把字节数组转化成int类型，小端模式
+	 *
+	 * @param b
+	 * @return
+	 */
+	public static int byteArrayToInt(byte[] b) {
 		int result = 0;
-		result = (b[0]&0xFF)|(b[1]<<8&0xFFFF)|(b[2]<<16&0xFFFFFF)|(b[3]<<24&0xFFFFFFFF);
+		result = (b[0] & 0xFF) | (b[1] << 8 & 0xFFFF) | (b[2] << 16 & 0xFFFFFF) | (b[3] << 24 & 0xFFFFFFFF);
 		return result;
 	}
 
 
-	public static String frontCompWithZore(int sourceDate,int formatLength){
-		String newString = String.format("%0"+formatLength+"d", sourceDate);
+	public static String frontCompWithZore(int sourceDate, int formatLength) {
+		String newString = String.format("%0" + formatLength + "d", sourceDate);
 		return newString;
 	}
-	public static byte[] encyData(String data){
+
+	public static byte[] encyData(String data) {
 		byte[] result = new byte[8];
 
 
-		for(int i=0;i<data.length();i++){
+		for (int i = 0; i < data.length(); i++) {
 			char cha = data.charAt(i);
-			result[i]=coverChar(cha);
+			result[i] = coverChar(cha);
 		}
 		return result;
 	}
-	public static byte coverChar(char cha){
-		switch(cha)
-		{
+
+	public static byte coverChar(char cha) {
+		switch (cha) {
 			case '0':
-				return (byte)(0x3F);
+				return (byte) (0x3F);
 			case '1':
-				return (byte)(0x06);
+				return (byte) (0x06);
 			case '2':
-				return (byte)(0x5B);
+				return (byte) (0x5B);
 			case '3':
-				return (byte)(0x4F);
+				return (byte) (0x4F);
 			case '4':
-				return (byte)(0x66);
+				return (byte) (0x66);
 
 			case '5':
-				return (byte)(0x6D);
+				return (byte) (0x6D);
 
 			case '6':
-				return (byte)(0x7D);
+				return (byte) (0x7D);
 			case '7':
-				return (byte)(0x07);
-				//ListLED[7-t1]=0x07;break;
+				return (byte) (0x07);
+			//ListLED[7-t1]=0x07;break;
 			case '8':
-				return (byte)(0x7F);
-				//ListLED[7-t1]=0x7F;break;
+				return (byte) (0x7F);
+			//ListLED[7-t1]=0x7F;break;
 			case '9':
-				return (byte)(0x6F);
-				//ListLED[7-t1]=0x6F;break;
+				return (byte) (0x6F);
+			//ListLED[7-t1]=0x6F;break;
 			default:
-				return (byte)((0x3F));
+				return (byte) ((0x3F));
 		}
 	}
 
@@ -475,17 +471,19 @@ public class StringUtil {
 
 		BigDecimal avg2 = new BigDecimal("33.44");
 		Double botweight = Double.valueOf("22.44");
-		BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2,BigDecimal.ROUND_CEILING);
+		BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2, BigDecimal.ROUND_CEILING);
 		System.out.print(pigW);
-        String hex = "FB72";
-        Integer x = Integer.parseInt(hex,16);
-        System.out.println("-----------------"+x);
-        double widthdouble = Double.valueOf(Integer.parseInt(hex,16)+"");
-        System.out.println("-----------------"+widthdouble);
+		String hex = "FB72";
+		Integer x = Integer.parseInt(hex, 16);
+		System.out.println("-----------------" + x);
+		double widthdouble = Double.valueOf(Integer.parseInt(hex, 16) + "");
+		System.out.println("-----------------" + widthdouble);
 		/*String hexstr = "FB72";
 		Double dd = Double.parseDouble(hexstr,16);
 		System.out.println(dd);*/
-		System.out.println(frontCompWithZore(2,3));
-		System.out.println("00013000---->"+encyData("00013000"));
+		System.out.println(frontCompWithZore(2, 3));
+		System.out.println("00013000---->" + encyData("00013000"));
 	}
 }
+
+
