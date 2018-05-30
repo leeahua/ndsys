@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="demosocket:war">
+    <output-path>F:/nongda/project/demosocket/target</output-path>
+    <root id="archive" name="demosocket.war">
+      <element id="artifact" artifact-name="demosocket:war exploded" />
+    </root>
+  </artifact>
+</component>
