@@ -22,7 +22,7 @@ public class SerialCom2 extends Observable implements Runnable,SerialPortEventLi
     static CommPortIdentifier portId;
     int delayRead = 10;
     int numBytes; // buffer中的实际数据字节数
-    private static byte[] readBuffer = new byte[1024]; // 4k的buffer空间,缓存串口读入的数据
+    private static byte[] readBuffer = new byte[17408]; // 4k的buffer空间,缓存串口读入的数据
     static Enumeration portList;
     InputStream inputStream;
     OutputStream outputStream;
@@ -98,6 +98,7 @@ public class SerialCom2 extends Observable implements Runnable,SerialPortEventLi
     {
         try
         {
+            LOGGER.error("1111111111111111111111111111111111这个延迟是什么时候发生的");
             Thread.sleep(50);
         }
         catch ( InterruptedException e )
@@ -117,10 +118,10 @@ public class SerialCom2 extends Observable implements Runnable,SerialPortEventLi
     }
 
     public void run(byte[] message) {
-        try {
+    /*    try {
             Thread.sleep(4);
         }
-        catch (InterruptedException e) {  }
+        catch (InterruptedException e) {  }*/
         try {
             if(message!=null&&message.length!=0)
             {
@@ -210,6 +211,7 @@ public class SerialCom2 extends Observable implements Runnable,SerialPortEventLi
         setChanged();
         byte[] temp = new byte[length];
         System.arraycopy( message, 0, temp, 0, length );
+        LOGGER.error("通知之前---------------------------------");
         notifyObservers( temp );
     }
 

@@ -157,7 +157,11 @@ public class SerialComLaser5Observable implements Observer {
         //将获取的十六进制数据转化为十进制
         Integer data = Integer.parseInt(hexstr,16);
         LOGGER.info("接收数据转十进制为：{}",data);
-        if(data>61000){
+        if(2300<data && data <=60536){
+            LOGGER.info("非法数据不处理：{}",data);
+            return;
+        }
+        if(data>60536){
             data = 65536 - data;
             data = 2300 + data;
         }else{
