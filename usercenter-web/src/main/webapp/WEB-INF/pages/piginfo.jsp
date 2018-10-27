@@ -44,7 +44,6 @@
                         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
                         <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>--%>
                     </td>
-
                 </tr>
 
             </table>
