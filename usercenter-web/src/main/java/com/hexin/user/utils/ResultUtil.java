@@ -63,6 +63,20 @@ public class ResultUtil {
         resultVO.setData(null);
         return resultVO;
     }
+    private static void updatePigLevelMap(PigLevel pigLevel){
+        log.info("开始修改等级阀值");
+        Constans.levelDataMap.put("LV1",pigLevel.getLevel1().toString());
+        Constans.levelDataMap.put("LV2",pigLevel.getLevel2().toString());
+        Constans.levelDataMap.put("LV3",pigLevel.getLevel3().toString());
+        Constans.levelDataMap.put("LV4",pigLevel.getLevel4().toString());
+        log.info("开始修改等级阀值，pigLevel：{}",pigLevel);
+    }
+    private static void updatePigWeightMap(PigPound pigPound){
+        log.info("开始修改底榜数据");
+        Constans.poundData.put("pound",Double.toString(pigPound.getBotpounds()));
+        Constans.poundData.put("batchNum",pigPound.getBatchNum());
+        log.info("开始修改底榜数据，pigPound：{}",pigPound);
+    }
     /**
      * 失败返回结果集
      * @return ResultVO
@@ -80,16 +94,14 @@ public class ResultUtil {
                 switch (type){
                     case "save":
                         result = pigPoundService.insert(pigLevel);
+                        if(result>0) {
+                            updatePigLevelMap(pigLevel);
+                        }
                         break;
                     case "update":
                         result = pigPoundService.update(pigLevel);
-                        if(result>0){
-                            log.info("开始修改等级阀值");
-                            Constans.levelDataMap.put("LV1",pigLevel.getLevel1().toString());
-                            Constans.levelDataMap.put("LV2",pigLevel.getLevel2().toString());
-                            Constans.levelDataMap.put("LV3",pigLevel.getLevel3().toString());
-                            Constans.levelDataMap.put("LV4",pigLevel.getLevel4().toString());
-                            log.info("开始修改等级阀值，pigLevel：{}",pigLevel);
+                        if(result>0) {
+                            updatePigLevelMap(pigLevel);
                         }
                         break;
                     case "delete":
@@ -112,14 +124,14 @@ public class ResultUtil {
                 switch (type){
                     case "save":
                         result = pigPoundService.insert(pigPound);
+                        if(result>0){
+                            updatePigWeightMap(pigPound);
+                        }
                         break;
                     case "update":
                         result = pigPoundService.update(pigPound);
                         if(result>0){
-                            log.info("开始修改底榜数据");
-                            Constans.poundData.put("pound",Double.toString(pigPound.getBotpounds()));
-                            Constans.poundData.put("batchNum",pigPound.getBatchNum());
-                            log.info("开始修改底榜数据，pigPound：{}",pigPound);
+                            updatePigWeightMap(pigPound);
                         }
                         break;
                     case "delete":
