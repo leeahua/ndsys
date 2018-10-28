@@ -5,35 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7470befc-5171-43a2-a1b8-588895d056d6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/dao/user/PigLevelDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/model/PigLevel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/vo/PigLevelVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigLevelMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-service/src/main/java/com/hexin/user/service/user/PigLevelService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/PigLevelController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/piglevel.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usercenter-web/src/main/webapp/static/js/piglevel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/dao/user/PigWeightDao.java" afterPath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/dao/user/PigWeightDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/dao/user/PigWidthDao.java" afterPath="$PROJECT_DIR$/usercenter-common/src/main/java/com/hexin/user/dao/user/PigWidthDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigWeightMapper.xml" afterPath="$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigWeightMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigWidthMapper.xml" afterPath="$PROJECT_DIR$/usercenter-common/src/main/resources/mapper/user/PigWidthMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-service/src/main/java/com/hexin/user/service/user/PigWeightService.java" afterPath="$PROJECT_DIR$/usercenter-service/src/main/java/com/hexin/user/service/user/PigWeightService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-service/src/main/java/com/hexin/user/service/user/PigWidthService.java" afterPath="$PROJECT_DIR$/usercenter-service/src/main/java/com/hexin/user/service/user/PigWidthService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/constants/Constans.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/constants/Constans.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/IndexController.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/IndexController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/LoginController.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/LoginController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/PigPoundController.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/PigPoundController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/SerialController.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/controller/SerialController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/enums/ResultStatueEnum.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/enums/ResultStatueEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2Observable.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialCom2Observable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser3Observable.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser3Observable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser5Observable.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/serialfull/SerialComLaser5Observable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/utils/ResultUtil.java" afterPath="$PROJECT_DIR$/usercenter-web/src/main/java/com/hexin/user/utils/ResultUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/resources/logback.xml" afterPath="$PROJECT_DIR$/usercenter-web/src/main/resources/logback.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/index.jsp" afterPath="$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/pigpounds.jsp" afterPath="$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/pigpounds.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -75,8 +47,8 @@
       <file leaf-file-name="piglevel.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/piglevel.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-447">
-              <caret line="22" column="7" lean-forward="false" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+            <state relative-caret-position="-154">
+              <caret line="50" column="14" lean-forward="true" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -235,6 +207,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="0cea8498e018977d18d9e9bfc153481c8742f0b2" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -1870,7 +1847,7 @@
       <workItem from="1540600121720" duration="2125000" />
       <workItem from="1540626223004" duration="5857000" />
       <workItem from="1540632326483" duration="17545000" />
-      <workItem from="1540692244663" duration="9222000" />
+      <workItem from="1540692244663" duration="9454000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1513510629559</created>
@@ -1963,7 +1940,14 @@
       <option name="project" value="LOCAL" />
       <updated>1540629823371</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="最后处理">
+      <created>1540704800837</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1540704800837</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1999,7 +1983,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="422725000" />
+    <option name="totallyTimeSpent" value="422957000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -2016,7 +2000,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24574961" sideWeight="0.60487807" order="16" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3289689" sideWeight="0.45688352" order="16" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32668713" sideWeight="0.4957265" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15355521" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2027,7 +2011,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2495935" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.72772276" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3289689" sideWeight="0.5431165" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.4934473" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297546" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07692308" sideWeight="0.469129" order="10" side_tool="false" content_ui="tabs" />
@@ -2285,6 +2269,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2292,6 +2277,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2374,6 +2362,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2389,6 +2378,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2647,8 +2637,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/usercenter-web/src/main/webapp/WEB-INF/pages/piglevel.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-447">
-          <caret line="22" column="7" lean-forward="false" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+        <state relative-caret-position="-154">
+          <caret line="50" column="14" lean-forward="true" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
           <folding />
         </state>
       </provider>
