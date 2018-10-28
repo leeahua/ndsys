@@ -1,7 +1,10 @@
 package com.hexin.user.controller;
 
+import com.hexin.user.constants.Constans;
 import com.hexin.user.enums.ResultStatueEnum;
+import com.hexin.user.model.PigPound;
 import com.hexin.user.model.SysUser;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.SysUserService;
 import com.hexin.user.utils.EncryptUtil;
 import com.hexin.user.utils.ResultUtil;
@@ -27,6 +30,9 @@ public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private PigPoundService pigPoundService;
     /**
      * 验证登录
      * */
@@ -51,7 +57,18 @@ public class LoginController {
         }
         //记录用户信息session
         request.getSession().setAttribute("user",username);
+
+
+
+
+
+
+
         return ResultUtil.success();
+    }
+
+    private void initPoundData(){
+
     }
     /**
      * 退出登录

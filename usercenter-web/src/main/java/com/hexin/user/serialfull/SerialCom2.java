@@ -98,7 +98,6 @@ public class SerialCom2 extends Observable implements Runnable,SerialPortEventLi
     {
         try
         {
-            LOGGER.error("1111111111111111111111111111111111这个延迟是什么时候发生的");
             Thread.sleep(50);
         }
         catch ( InterruptedException e )

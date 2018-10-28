@@ -110,4 +110,15 @@ public class IndexController {
         return "welcome";
     }
 
+    /**
+     * 跳转到登录页面
+     * */
+    @RequestMapping("/tolevel")
+    public String toLevel(HttpServletRequest request){
+        if(!checkLogin(request)){
+            return "login";
+        }
+        return "piglevel";
+    }
+
 }

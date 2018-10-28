@@ -13,6 +13,7 @@ public enum ResultStatueEnum {
      * 失败返回信息
      * */
     ERROE("01", "处理失败"),
+
     PARAMETER_ERROR("02","参数有误"),
     LOGIN_ERROR("03","用户名或者密码错误" ),
 
@@ -21,7 +22,10 @@ public enum ResultStatueEnum {
     SERIAL_SEND_ERROR("05","串口数据发送异常" ),
     USER_ERROR("07","用户名信息不存在" ),
     BATCH_DATA_NOT_EXISTS("08", "批次数据不存在！请录入"),
-    POUND_DATA_NOT_EXISTS("07", "地磅数据不存在！请录入");
+    POUND_DATA_NOT_EXISTS("09", "地磅数据不存在！请录入"),
+    LEVEL_DATA_NOT_EXISTS("10", "等级数据不存在请录入"),
+    LEVEL_DATA_NOT_FULL("11", "等级数据不完整请补全"),
+    DATA_ALREAD_EXISTS("12", "数据已存在，请直接修改");
 
     private String code;
     private String msg;

@@ -1,17 +1,14 @@
 package com.hexin.user.utils;
 
 
+import com.hexin.user.constants.Constans;
 import com.hexin.user.enums.ResultStatueEnum;
 import com.hexin.user.exception.UserException;
-import com.hexin.user.model.PigPound;
-import com.hexin.user.model.PigWeight;
-import com.hexin.user.model.PigWidth;
-import com.hexin.user.model.SysUser;
-import com.hexin.user.service.user.PigPoundService;
-import com.hexin.user.service.user.PigWeightService;
-import com.hexin.user.service.user.PigWidthService;
-import com.hexin.user.service.user.SysUserService;
+import com.hexin.user.model.*;
+import com.hexin.user.service.user.*;
 import com.hexin.user.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
@@ -22,7 +19,7 @@ import java.util.Arrays;
  * @uthor:LYH
  */
 public class ResultUtil {
-
+    private static final Logger log = LoggerFactory.getLogger(ResultUtil.class);
     private ResultUtil(){}
     /**
      * 成功返回结果集
@@ -54,6 +51,18 @@ public class ResultUtil {
         resultVO.setData(null);
         return resultVO;
     }
+
+    /**
+     * 失败返回结果集
+     * @return ResultVO
+     */
+    public static ResultVO error(String code, String message) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setCode(code);
+        resultVO.setMsg(message);
+        resultVO.setData(null);
+        return resultVO;
+    }
     /**
      * 失败返回结果集
      * @return ResultVO
@@ -64,6 +73,38 @@ public class ResultUtil {
 
     public static ResultVO loadResult(Object dataObject, String type,Object businessService){
         int result = 0;
+        if(businessService instanceof PigLevelService){
+            PigLevelService pigPoundService = (PigLevelService)businessService;
+            PigLevel pigLevel = (PigLevel) dataObject;
+            try {
+                switch (type){
+                    case "save":
+                        result = pigPoundService.insert(pigLevel);
+                        break;
+                    case "update":
+                        result = pigPoundService.update(pigLevel);
+                        if(result>0){
+                            log.info("开始修改等级阀值");
+                            Constans.levelDataMap.put("LV1",pigLevel.getLevel1().toString());
+                            Constans.levelDataMap.put("LV2",pigLevel.getLevel2().toString());
+                            Constans.levelDataMap.put("LV3",pigLevel.getLevel3().toString());
+                            Constans.levelDataMap.put("LV4",pigLevel.getLevel4().toString());
+                            log.info("开始修改等级阀值，pigLevel：{}",pigLevel);
+                        }
+                        break;
+                    case "delete":
+                        result = pigPoundService.delete(pigLevel);
+                        break;
+                    default:
+                        result = 0;
+                        break;
+                }
+            }catch(Exception e){
+                log.error(e.getMessage());
+                throw new UserException(ResultStatueEnum.ERROE);
+
+            }
+        }
         if(businessService instanceof PigPoundService){
             PigPoundService pigPoundService = (PigPoundService)businessService;
             PigPound pigPound = (PigPound) dataObject;
@@ -74,6 +115,12 @@ public class ResultUtil {
                         break;
                     case "update":
                         result = pigPoundService.update(pigPound);
+                        if(result>0){
+                            log.info("开始修改底榜数据");
+                            Constans.poundData.put("pound",Double.toString(pigPound.getBotpounds()));
+                            Constans.poundData.put("batchNum",pigPound.getBatchNum());
+                            log.info("开始修改底榜数据，pigPound：{}",pigPound);
+                        }
                         break;
                     case "delete":
                         result = pigPoundService.delete(pigPound);

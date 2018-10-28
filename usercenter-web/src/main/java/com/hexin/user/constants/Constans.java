@@ -16,9 +16,10 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Constans {
 
-    public static String isOpen ;
 
     public static Map<String,String> poundData = new HashMap<>();
+    public static Map<String,String> openStatusMap = new HashMap<>();
+    public static Map<String,String> levelDataMap = new HashMap<>();
 
 
 

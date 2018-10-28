@@ -3,7 +3,9 @@ package com.hexin.user.serialfull;
 
 
 import com.hexin.user.constants.Constans;
+import com.hexin.user.model.PigPound;
 import com.hexin.user.model.PigWeight;
+import com.hexin.user.service.user.PigPoundService;
 import com.hexin.user.service.user.PigWeightService;
 import com.hexin.user.utils.ByteUtil;
 import org.slf4j.Logger;
@@ -25,12 +27,12 @@ public class SerialCom2Observable implements Observer {
     private static final String RATE = "38400"; //波特率
     private static final int TIME_OUT = 1000;   //超时时间1秒
     private static final int DELAY = 50;      //延迟100ms
-    private static int initIndex = 0;
     private SerialCom2 sr = new SerialCom2();
     private static boolean dataflag = false;
     private static Stack<Double> data = new Stack<>();
     private static List<Double> lowdata = new ArrayList<>();
     private PigWeightService pigWeightService;
+    private PigPoundService pigPoundService;
     private String preHexData;
     private static int stopFlag = 0;
     private static ExecutorService service  = new ThreadPoolExecutor(
@@ -38,8 +40,9 @@ public class SerialCom2Observable implements Observer {
             ,10,30, TimeUnit.SECONDS,new LinkedBlockingDeque<Runnable>(5000));
 
 
-    public  SerialCom2Observable(PigWeightService serialService){
+    public  SerialCom2Observable(PigWeightService serialService, PigPoundService pigPoundService){
             this.pigWeightService = serialService;
+            this.pigPoundService = pigPoundService;
             LOGGER.info("初始化SerialCom2Observable 完毕!");
 
     }
@@ -50,8 +53,8 @@ public class SerialCom2Observable implements Observer {
     public void close(){
         sr.close();
     }
-    public static SerialCom2Observable getInstance(PigWeightService serialService){
-        return new SerialCom2Observable(serialService);
+    public static SerialCom2Observable getInstance(PigWeightService serialService,PigPoundService pigPoundService){
+        return new SerialCom2Observable(serialService,pigPoundService);
     }
     public static SerialCom2Observable getInstance(){
         return new SerialCom2Observable();
@@ -192,7 +195,7 @@ public class SerialCom2Observable implements Observer {
     }
 
     private void handleWt(List<Double> wtList) {
-        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
+        LOGGER.info("当前处理线程：{} 开始",Thread.currentThread().getName());
         for(int i=0;i<wtList.size();i++){
             Double wt = wtList.get(i);
             if(wt>25){
@@ -240,8 +243,6 @@ public class SerialCom2Observable implements Observer {
                         continue;
                     }
                     if(data.size()>1) {
-
-
                         LOGGER.info("curThread:{},开始入库 data:{}",Thread.currentThread().getName(), data);
                         Double[] doubles = new Double[data.size()];
                         data.toArray(doubles);
@@ -252,16 +253,22 @@ public class SerialCom2Observable implements Observer {
                             sum2 = sum2.add(new BigDecimal(Double.toString(dataDou)));
                         }
                         avg2 = sum2.divide(new BigDecimal(Double.toString(doubles.length)), 2, BigDecimal.ROUND_CEILING);
+                        PigWeight dbPigWeight = pigWeightService.selectLasterByBatchNo(Constans.poundData.get("batchNum"));
+                        int nextNo = 1;
+                        if(dbPigWeight != null){
+                            //说明数据库中不存在
+                            nextNo = Integer.valueOf(dbPigWeight.getPigNum()==null?"1":dbPigWeight.getPigNum())+1;
+                        }
                         PigWeight pigWeight = new PigWeight();
                         pigWeight.setChargeMan("admin");
                         Double botweight = Double.valueOf(Constans.poundData.get("pound"));
                         BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2, BigDecimal.ROUND_CEILING);
                         pigWeight.setPigWeight(pigW);
                         pigWeight.setPigBatchNo(Constans.poundData.get("batchNum") == null ? "" : Constans.poundData.get("batchNum"));
-                        pigWeight.setPigNum(String.format("%05d", ++initIndex));
+
+                        pigWeight.setPigNum(String.format("%05d", nextNo));
                         this.pigWeightService.insert(pigWeight);
                         LOGGER.info("curThread:{},入库完成",Thread.currentThread().getName());
-
                         data.clear();
                         dataflag = false;
                         stopFlag = 0;
@@ -275,7 +282,7 @@ public class SerialCom2Observable implements Observer {
 
         }
         wtList.clear();
-        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
+        LOGGER.info("当前处理线程：{} 结束",Thread.currentThread().getName());
     }
 
     private Double byteToDouble(byte[] data){
@@ -283,74 +290,6 @@ public class SerialCom2Observable implements Observer {
         String weight = ByteUtil.hexString2String(hexstr);
         Double wt = Double.valueOf(weight.substring(2,6))/10.0;
         return wt;
-    }
-    private void handleData(List<byte[]> dataList) {
-        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
-        for(int i=0;i<dataList.size();i++){
-            byte[] message =  dataList.get(i);
-            Double wt = byteToDouble(message);
-            LOGGER.info("-------------------接收数据位:{}",wt);
-            if(wt>25){
-                dataflag = true;
-                if(i<1){
-                    Double beforWt = byteToDouble( dataList.get(i));
-                    data.push(wt);
-                    LOGGER.info("解析数值:{}",wt);
-                }else {
-                    Double beforWt = byteToDouble(dataList.get(i - 1));
-                    if (Math.abs(wt - beforWt) <= 0.5) {
-                        data.push(wt);
-                        LOGGER.info("解析数值:{}", wt);
-                    } else {
-                        if (data.size() <= 5) {
-                            data.clear();
-                            data.push(wt);
-                        }
-                    }
-                }
-                continue;
-            }else{
-                if(dataflag){
-                    if(data.size()==0)continue;
-                    lowdata.add(wt);
-                    if(lowdata.size()>1){
-                        if(wt<lowdata.get(lowdata.size()-2)){
-                            stopFlag++;
-                        }
-                    }
-                    //如果没有连续五个数是下降趋势,则继续收集数据
-                    if(stopFlag<5){
-                        continue;
-                    }
-                    Double[] doubles = new Double[data.size()];
-                    data.toArray(doubles);
-                    Arrays.sort(doubles);
-                    double avg = 0.0;
-                    double sum = 0.0;
-                    BigDecimal sum2 = new BigDecimal(0.0);
-                    BigDecimal avg2 = new BigDecimal(0.0);
-
-                    for(Double dataDou:doubles){
-                        sum2 = sum2.add(new BigDecimal(Double.toString(dataDou)));
-                    }
-                    avg2 = sum2.divide(new BigDecimal(Double.toString(doubles.length)),2,BigDecimal.ROUND_CEILING);
-                    PigWeight pigWeight = new PigWeight();
-                    pigWeight.setChargeMan("admin");
-                    Double botweight = Double.valueOf(Constans.poundData.get("pound"));
-                    BigDecimal pigW = avg2.subtract(new BigDecimal(Double.toString(botweight))).setScale(2,BigDecimal.ROUND_CEILING);
-                    pigWeight.setPigWeight(pigW);
-                    pigWeight.setPigBatchNo(Constans.poundData.get("batchNum")==null?"":Constans.poundData.get("batchNum"));
-                    pigWeight.setPigNum(String.format("%05d",++initIndex));
-                    this.pigWeightService.insert(pigWeight);
-                    data.removeAllElements();
-                    dataflag = false;
-                    stopFlag = 0;
-                }
-
-            }
-
-        }
-        LOGGER.info("---------handleData----------当前处理线程：{} 开始",Thread.currentThread().getName());
     }
 
     private void putData(Double wt) {

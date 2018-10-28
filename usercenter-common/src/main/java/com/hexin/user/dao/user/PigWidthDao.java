@@ -23,4 +23,9 @@ public interface PigWidthDao extends BaseDao<PigWidth> {
      * */
     Integer countSelectByPage(PigWidthVO record);
 
+    /**
+     * 获取指定批次的最新的一条数据
+     * */
+    PigWidth selectLasterByBatchNo(String batchNo);
+
 }

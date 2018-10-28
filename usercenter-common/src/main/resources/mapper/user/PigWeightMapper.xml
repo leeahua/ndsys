@@ -282,6 +282,13 @@
         </trim>
     </select>
 
+    <select id="selectLasterByBatchNo" resultMap="pigWeight">
+        select
+        <include refid="columns" />
+        from `pig_weight`
+        where `pig_batch_no` = #{batchNo} order by id desc limit 1
+    </select>
+
 
 
 

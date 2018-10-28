@@ -77,11 +77,14 @@ public class PigPoundController {
     @RequestMapping(value="/save",method = RequestMethod.POST)
     @ResponseBody
     public Object insertPigPound(@RequestBody PigPound pigPound,
-                                 HttpServletRequest request,
                                  BindingResult bindingResult){
         logger.info("[/pigpound/save],请求参数:{}",JSONObject.toJSONString(pigPound));
         if(bindingResult.hasErrors()){
-            throw new UserException(ResultStatueEnum.PARAMETER_ERROR);
+            return ResultUtil.error(ResultStatueEnum.PARAMETER_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+        }
+        Integer total = pigPoundService.countSelectByPage(new PigPoundsVO());
+        if(total!=null && total>0){
+            return ResultUtil.error(ResultStatueEnum.DATA_ALREAD_EXISTS);
         }
         pigPound.setCreateTime(new Date());
         pigPound.setBatchNum(pigPound.getBatchNum());
@@ -95,12 +98,13 @@ public class PigPoundController {
                                  @RequestParam(name = "id")Integer id,
                                  BindingResult bindingResult){
         logger.info("[/pigpound/update],请求参数:{}",JSONObject.toJSONString(pigPound));
+        if(bindingResult.hasErrors()){
+            return ResultUtil.error(ResultStatueEnum.PARAMETER_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+        }
         if(id==null){
             return ResultUtil.error(ResultStatueEnum.PARAMETER_ERROR);
         }
-        if(bindingResult.hasErrors()){
-            throw new UserException(ResultStatueEnum.PARAMETER_ERROR);
-        }
+
         pigPound.setId(id);
         pigPound.setCreateTime(new Date());
         return ResultUtil.loadResult(pigPound,"update",pigPoundService);

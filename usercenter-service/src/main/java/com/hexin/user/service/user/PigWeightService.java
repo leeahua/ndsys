@@ -2,6 +2,7 @@ package com.hexin.user.service.user;
 
 import com.hexin.user.dao.user.PigWeightDao;
 import com.hexin.user.model.PigWeight;
+import com.hexin.user.model.PigWidth;
 import com.hexin.user.vo.PigWeightVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,8 @@ public class PigWeightService {
 
     public Integer countSelectByPage(PigWeightVO pigWeightVO) {
         return pigWeightDao.countSelectByPage(pigWeightVO);
+    }
+    public PigWeight selectLasterByBatchNo(String batchNo) {
+        return pigWeightDao.selectLasterByBatchNo(batchNo);
     }
 }

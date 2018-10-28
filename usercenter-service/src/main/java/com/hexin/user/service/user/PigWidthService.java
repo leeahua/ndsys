@@ -49,4 +49,8 @@ public class PigWidthService {
     public Integer countSelectByPage(PigWidthVO pigWidthVO) {
         return pigWidthDao.countSelectByPage(pigWidthVO);
     }
+
+    public PigWidth selectLasterByBatchNo(String batchNo) {
+        return pigWidthDao.selectLasterByBatchNo(batchNo);
+    }
 }

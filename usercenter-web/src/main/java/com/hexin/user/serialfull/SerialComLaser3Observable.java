@@ -27,7 +27,6 @@ public class SerialComLaser3Observable implements Observer {
     private static final int TIME_OUT = 100;   //超时时间1秒
     private static final int DELAY = 100;      //延迟1秒
     private static PigWidthService pigWidthServicelocal;
-    private static int initIndex = 2;
     private static int preIndex = -1;
     private  SerialComLaser3 sr = new SerialComLaser3();
     private static SerialCom3Observable serialCom3Observable;
@@ -173,33 +172,37 @@ public class SerialComLaser3Observable implements Observer {
         double widthdouble = Double.valueOf(data+"");
         LOGGER.info("入库数据:{}", widthdouble);
         int  rank = 5;
-        if(widthdouble<17){
+        if(widthdouble<Double.valueOf(Constans.levelDataMap.get("LV1"))){
             rank = 1;
-        }else if(widthdouble<27){
+        }else if(widthdouble<Double.valueOf(Constans.levelDataMap.get("LV2"))){
             rank = 2;
-        }else if(widthdouble<37){
+        }else if(widthdouble<Double.valueOf(Constans.levelDataMap.get("LV3"))){
             rank = 3;
-        }else if(widthdouble<=45){
+        }else if(widthdouble<=Double.valueOf(Constans.levelDataMap.get("LV4"))){
             rank = 4;
         }else {
             rank = 5;
         }
         //数据入库
+        PigWidth dbPigWidth = pigWidthServicelocal.selectLasterByBatchNo(Constans.poundData.get("batchNum"));
+        int nextNo = 1;
+        if(dbPigWidth!=null){
+            nextNo = Integer.valueOf(dbPigWidth.getPigNum()==null?"1":dbPigWidth.getPigNum())+1;
+        }
         PigWidth pigWidth = new PigWidth();
         pigWidth.setPigLevel(rank+"");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         String batchNo = sdf.format(new Date());
         pigWidth.setPigBatchNo(Constans.poundData.get("batchNum"));
         LOGGER.info("batchNo:{}", batchNo);
-        pigWidth.setPigNum(String.format("%05d",initIndex));
+        pigWidth.setPigNum(String.format("%05d",nextNo));
         pigWidth.setPigColor("否");
         pigWidth.setPigWidth(new BigDecimal(widthdouble).setScale(2,BigDecimal.ROUND_CEILING));
         pigWidthServicelocal.insert(pigWidth);
         LOGGER.info("入库成功:{}", batchNo);
         preIndex = pigWidth.getId();
-        byte[] backDate = covertData(initIndex,data);
+        byte[] backDate = covertData(nextNo,data);
         serialCom3Observable.send(backDate);
-        initIndex = initIndex + 2;
     }
 
     /**
@@ -261,7 +264,6 @@ public class SerialComLaser3Observable implements Observer {
             }else{
                 PigWidth pigWidthdb =  pigWidthDbs.get(0);
                 pigWidthServicelocal.delete(pigWidthdb);
-                initIndex=initIndex-2;
                 LOGGER.error("删除前置编号{}的宽度数据完成",preIndex);
             }
         }else{

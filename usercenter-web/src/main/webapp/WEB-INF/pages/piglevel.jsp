@@ -6,34 +6,27 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%@include file="taglibs.jsp" %>
-    <script type="application/javascript" src="/static/js/pigpounds.js"></script>
+    <script type="application/javascript" src="/static/js/piglevel.js"></script>
 </head>
 
 <body style="margin: 1px;">
-<table id="dg" title="底磅信息维护列表" class="easyui-datagrid"
+<table id="userdg" title="等级阀值信息维护列表" class="easyui-datagrid"
        toolbar="#toolbar" idField="itemid"  pagination="true" rownumbers="true"
        fitColumns="true" singleSelect="true" fit="true">
     <thead>
     <tr>
-        <th field="id" width="10" type='hidden'>id</th>
-        <th field="botpounds" width="10">底磅重</th>
-        <th field="batchNum" width="30">批次号</th>
-        <th field="createTime" width="35" formatter="formatDateTime">创建时间</th>
+        <th field="id"  width="10" type='hidden'>id</th>
+        <th field="level1" width="10">等级A</th>
+        <th field="level2" width="30">等级B</th>
+        <th field="level3" width="10">等级C</th>
+        <th field="level4" width="30">等级D</th>
+
     </tr>
     </thead>
 </table>
 <div id="toolbar"><!--查询div-->
-    <form id="ff">
+    <form id="userff">
         <table style="width:100%;">
-            <%--<tr>
-                <td style="width:100%;">
-                    创建时间 从: <input class="easyui-datebox" name="startTime" id="startTime"   style="width:120px">
-                      到: <input class="easyui-datebox" name="endTime" id="endTime" style="width:120px">
-
-                    <a href="javascript:search()" class="easyui-linkbutton" data-options="iconCls:'icon-search'" title="搜索"  >搜索</a>
-                    <a href="javascript:reset()" class="easyui-linkbutton" data-options="iconCls:'icon-reload'"  title="重置" >重置</a>
-                </td>
-            </tr>--%>
             <tr>
                 <td style="width:100%;">
                     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
@@ -47,18 +40,27 @@
 
     </form>
 </div>
-<div id="dlg" class="easyui-dialog" style="width:200px;height:180px;padding:10px 20px"
+<div id="userdlg" class="easyui-dialog" style="width:280px;height:250px;padding:5px 5px"
      closed="true" buttons="#dlg-buttons">
-    <form id="fm" method="post" >
+    <form id="userfm" method="post" >
         <div style="margin-bottom:10px">
-            <input class="easyui-textbox" name="botpounds" style="width:100%" data-options="label:'底磅重(kg):',required:true">
-            <input class="easyui-textbox" name="batchNum" style="width:100%" data-options="label:'批次号:',required:true">
+            <input class="easyui-numberbox" name="level1" style="width:100%" data-options="label:'等级A:',required:true">
         </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-numberbox" name="level2" style="width:100%" data-options="label:'等级B:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-numberbox" name="level3" style="width:100%" data-options="label:'等级C:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-numberbox" name="level4" style="width:100%" data-options="label:'等级D:',required:true">
+        </div>
+
     </form>
 </div>
 <div id="dlg-buttons">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">保存</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#userdlg').dialog('close')">取消</a>
 </div>
 </body>
 <script>
@@ -82,49 +84,50 @@
         return o;
     };
     function newUser(){
-        $('#dlg').dialog('open').dialog('setTitle','新增窗口');
-        $('#fm').form('clear');
-        url = '/pigpound/save';
+        $('#userdlg').dialog('open').dialog('setTitle','新增窗口');
+        $('#userfm').form('clear');
+        url = '/level/save';
     }
     function editUser(){
-        var row = $('#dg').datagrid('getSelected');
+        var row = $('#userdg').datagrid('getSelected');
         if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑窗口');
-            $('#fm').form('load',row);
-            url = '/pigpound/update?id='+row.id;
+            $('#userdlg').dialog('open').dialog('setTitle','编辑窗口');
+            $('#userfm').form('load',row);
+            url = '/level/update?id='+row.id;
         }
     }
     function saveUser(){
         $.ajax({
             type: "POST",
             url: url,
-            data: JSON.stringify($("#fm").serializeObject()),
+            data: JSON.stringify($("#userfm").serializeObject()),
             dataType: "json",
             contentType:"application/json",
             success: function(result){
                 if (result.code != "00"){
-                    $('#dlg').dialog('close');
+                    $('#userdlg').dialog('close');
                 } else {
-                    $('#dlg').dialog('close');
-                    $('#dg').datagrid('reload');	// reload the user data
+                    $('#userdg').datagrid('reload');	// reload the user data
                 }
                 alert(result.msg);
+
             },
-            error:function(result){
-                alert("连接服务器失败");
+            error:function(data){
+
+                alert("处理失败");
             }
         });
 
     }
     function destroyUser(){
-        var row = $('#dg').datagrid('getSelected');
+        var row = $('#userdg').datagrid('getSelected');
         if (row){
             $.messager.confirm('警告','您确定要删除这条记录么?',function(r){
                 if (r){
-                    $.post('/pigpound/delete',{id:row.id},function(result){
+                    $.post('/level/delete',{id:row.id},function(result){
                         alert(result.msg);
                         if (result.code=="00"){
-                            $('#dg').datagrid('reload');	// reload the user data
+                            $('#userdg').datagrid('reload');	// reload the user data
                         }
                     },'json');
                 }

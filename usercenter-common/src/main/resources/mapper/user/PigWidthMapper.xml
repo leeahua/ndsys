@@ -165,6 +165,12 @@
         where id = #{id}
     </update>
 
+    <select id="selectLasterByBatchNo" resultMap="pigWidth">
+        select
+        <include refid="columns" />
+        from `pig_width`
+        where `pig_batch_no` = #{batchNo} order by id desc limit 1
+    </select>
     <select id="select" resultMap="pigWidth">
         select
         <include refid="columns" />

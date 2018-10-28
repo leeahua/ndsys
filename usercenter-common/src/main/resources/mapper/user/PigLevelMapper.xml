@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hexin.user.dao.user.PigLevelDao" >
+  <resultMap id="pigLevel" type="com.hexin.user.model.PigLevel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="level1" property="level1" jdbcType="DOUBLE" />
+    <result column="level2" property="level2" jdbcType="DOUBLE" />
+    <result column="level3" property="level3" jdbcType="DOUBLE" />
+    <result column="level4" property="level4" jdbcType="DOUBLE" />
+    <result column="level5" property="level5" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, level1, level2, level3, level4, level5, create_by, create_time, update_by, update_time
+  </sql>
+  <select id="select" resultMap="pigLevel" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pig_level
+    <trim prefix="where " prefixOverrides="and ">
+      <if test="id != null">
+        and `id` = #{id}
+      </if>
+      <if test="level1 != null ">
+        and `level1` = #{level1,jdbcType=DOUBLE}
+      </if>
+      <if test="level2 != null ">
+        and `level2` = #{level2,jdbcType=DOUBLE}
+      </if>
+      <if test="level1 != null ">
+        and `level3` = #{level3,jdbcType=DOUBLE}
+      </if>
+      <if test="level4 != null ">
+        and `level4` = #{level4,jdbcType=DOUBLE}
+      </if>
+      <if test="level5 != null ">
+        and `level5` = #{level5,jdbcType=DOUBLE}
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pig_level
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="delete">
+    delete from `pig_level`
+    <trim prefix="where " prefixOverrides="and ">
+      <if test="id != null">
+        and `id` = #{id}
+      </if>
+    </trim>
+  </delete>
+
+  <delete id="deletes">
+    delete from `pig_level`
+    where `id` in
+    <foreach collection="ids" open="(" item="id" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.hexin.user.model.PigLevel" >
+    insert into pig_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="level1 != null" >
+        level1,
+      </if>
+      <if test="level2 != null" >
+        level2,
+      </if>
+      <if test="level3 != null" >
+        level3,
+      </if>
+      <if test="level4 != null" >
+        level4,
+      </if>
+      <if test="level5 != null" >
+        level5,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="level1 != null" >
+        #{level1,jdbcType=DOUBLE},
+      </if>
+      <if test="level2 != null" >
+        #{level2,jdbcType=DOUBLE},
+      </if>
+      <if test="level3 != null" >
+        #{level3,jdbcType=DOUBLE},
+      </if>
+      <if test="level4 != null" >
+        #{level4,jdbcType=DOUBLE},
+      </if>
+      <if test="level5 != null" >
+        #{level5,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.hexin.user.model.PigLevel" >
+    update pig_level
+    <set >
+      <if test="level1 != null" >
+        level1 = #{level1,jdbcType=DOUBLE},
+      </if>
+      <if test="level2 != null" >
+        level2 = #{level2,jdbcType=DOUBLE},
+      </if>
+      <if test="level3 != null" >
+        level3 = #{level3,jdbcType=DOUBLE},
+      </if>
+      <if test="level4 != null" >
+        level4 = #{level4,jdbcType=DOUBLE},
+      </if>
+      <if test="level5 != null" >
+        level5 = #{level5,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectByPage" resultMap="pigLevel" parameterType="com.hexin.user.vo.PigLevelVO">
+    select
+    <include refid="Base_Column_List" />
+    from `pig_level`
+    <trim prefix="where " prefixOverrides="and ">
+      <if test="id != null">
+        and `id` = #{id}
+      </if>
+      <if test="level1 != null ">
+        and `level1` = #{level1,jdbcType=DOUBLE}
+      </if>
+      <if test="level2 != null ">
+        and `level2` = #{level2,jdbcType=DOUBLE}
+      </if>
+      <if test="level1 != null ">
+        and `level3` = #{level3,jdbcType=DOUBLE}
+      </if>
+      <if test="level4 != null ">
+        and `level4` = #{level4,jdbcType=DOUBLE}
+      </if>
+      <if test="level5 != null ">
+        and `level5` = #{level5,jdbcType=DOUBLE}
+      </if>
+
+    </trim>
+    order by update_time desc
+    <if test="start !=null and pageSize!=null">
+      limit #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="countSelectByPage" resultType="int" parameterType="com.hexin.user.vo.PigLevelVO">
+    select
+    count(1)
+    from `pig_level`
+    <trim prefix="where " prefixOverrides="and ">
+      <if test="id != null">
+        and `id` = #{id}
+      </if>
+      <if test="level1 != null ">
+        and `level1` = #{level1,jdbcType=DOUBLE}
+      </if>
+      <if test="level2 != null ">
+        and `level2` = #{level2,jdbcType=DOUBLE}
+      </if>
+      <if test="level1 != null ">
+        and `level3` = #{level3,jdbcType=DOUBLE}
+      </if>
+      <if test="level4 != null ">
+        and `level4` = #{level4,jdbcType=DOUBLE}
+      </if>
+      <if test="level5 != null ">
+        and `level5` = #{level5,jdbcType=DOUBLE}
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectOne" resultMap="pigLevel">
+    select
+    <include refid="Base_Column_List" />
+    from `pig_level`
+    order by id desc limit 1
+
+  </select>
+</mapper>
