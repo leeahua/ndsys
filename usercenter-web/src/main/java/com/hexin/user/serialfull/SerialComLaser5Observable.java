@@ -166,7 +166,7 @@ public class SerialComLaser5Observable implements Observer {
         }else{
             data = 2300 - data;
         }
-        data = (data-100)/100*100;
+        data = (data+2000-100)/100*100;
         double widthdouble = Double.valueOf(data+"");
         LOGGER.info("入库数据:{}", widthdouble);
         //double widthdouble = Double.valueOf(width);
