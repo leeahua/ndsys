@@ -156,17 +156,17 @@ public class SerialComLaser5Observable implements Observer {
         //将获取的十六进制数据转化为十进制
         Integer data = Integer.parseInt(hexstr,16);
         LOGGER.info("接收数据转十进制为：{}",data);
-        if(2300<data && data <=60536){
+        if(3500<data && data <=60536){
             LOGGER.info("非法数据不处理：{}",data);
             return;
         }
         if(data>60536){
             data = 65536 - data;
-            data = 2300 + data;
+            data = 3500 + data;
         }else{
-            data = 2300 - data;
+            data = 3500 - data;
         }
-        data = (data+2000-100)/100*100;
+        data = (data-100)/100*100;
         double widthdouble = Double.valueOf(data+"");
         LOGGER.info("入库数据:{}", widthdouble);
         //double widthdouble = Double.valueOf(width);
@@ -186,7 +186,7 @@ public class SerialComLaser5Observable implements Observer {
         PigWidth dbPigWidth = pigWidthServicelocal.selectLasterByBatchNo(Constans.poundData.get("batchNum"));
         int nextNo = 1;
         if(dbPigWidth!=null){
-            nextNo = Integer.valueOf(dbPigWidth.getPigNum()==null?"1":dbPigWidth.getPigNum())+1;
+            nextNo = Integer.valueOf(dbPigWidth.getPigNum()==null?"1":dbPigWidth.getPigNum())+2;
         }
         PigWidth pigWidth = new PigWidth();
         pigWidth.setPigLevel(rank+"");
